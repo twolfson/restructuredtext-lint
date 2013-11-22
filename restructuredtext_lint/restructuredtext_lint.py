@@ -10,6 +10,8 @@ def run(content, filepath=None, **kwargs):
     document = docutils.utils.new_document(filepath, settings=settings)
 
     # Disable stdout
+    # TODO: Find a more proper way to do this
+    # TODO: We might exit the program is a certain error level is reached
     document.reporter.stream = None
 
     # Collect errors via an observer
