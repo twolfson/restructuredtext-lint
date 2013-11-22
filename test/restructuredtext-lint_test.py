@@ -10,6 +10,13 @@ A valid rst file
 An invalid rst file
     when linted
         returns errors
+
+# TODO: We should build out a bin script to lint files
+# TODO: This should evolve into part of sublime-linter
+# TODO: Implement this or record it as an open issue
+An invalid rst file
+    when linted with the `fail_first` parameter
+        raises on the first error
 """
 
 class TestRestructuredtextLint(TestCase):
