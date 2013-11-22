@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='restructuredtext_lint',
-    version='0.1.0',
+    version='0.1.1',
     description='reStructuredText linter',
     long_description=open('README.rst').read(),
     keywords=[
