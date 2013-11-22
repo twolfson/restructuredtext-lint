@@ -1,7 +1,7 @@
 import os
 from unittest import TestCase
 
-from restructuredtext_lint import restructuredtext_lint
+import restructuredtext_lint
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,7 +31,7 @@ class TestRestructuredtextLint(TestCase):
 
     def _lint_file(self, *args, **kwargs):
         """Lint the file and preserve any errors"""
-        return restructuredtext_lint.run(*args)
+        return restructuredtext_lint.lint(*args)
 
     # TODO: Move to flat file tests
     def test_passes_valid_rst(self):
