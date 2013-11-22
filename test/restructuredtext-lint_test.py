@@ -51,11 +51,11 @@ class TestRestructuredtextLint(TestCase):
 
         # Load in expected errors
         expected_yaml = self._load_file(__dir__ + '/test_files/invalid.yaml')
-        expected_errors = yaml.loads(expected_yaml)
+        expected_errors = yaml.load(expected_yaml)
 
         # Assert errors against expected errors
         self.assertEqual(len(actual_errors), len(expected_errors))
         for i, error in enumerate(expected_errors):
-            self.assertEqual(actual_errors[i].line, expected_errors['line'])
+            self.assertEqual(actual_errors[i].line, expected_errors[i]['line'])
             self.assertEqual(actual_errors[i].source, filepath)
-            self.assertEqual(actual_errors[i].message, expected_errors['message'])
+            self.assertEqual(actual_errors[i].message, expected_errors[i]['message'])
