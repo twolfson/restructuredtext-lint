@@ -7,5 +7,9 @@ def run(content, filepath=None, **kwargs):
                     components=(docutils.parsers.rst.Parser,)
                     ).get_default_values()
     document = docutils.utils.new_document(filepath, settings=settings)
-    print parser.parse(content, document)
+    def echo(data):
+        # print 'aaaaaaaaaaaa', data
+        pass
+    # document.reporter.error_handler = echo
+    print 'xxx', parser.parse(content, document)
     return []
