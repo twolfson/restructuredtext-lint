@@ -26,6 +26,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: Public Domain',
         'Operating System :: OS Independent',
-        'Programming Language :: Python'
+        'Topic :: Text Processing :: Markup'
     ]
 )
