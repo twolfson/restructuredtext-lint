@@ -28,22 +28,26 @@ class TestRestructuredtextLint(TestCase):
     def _load_file(self, filepath):
         """Load a file into memory"""
         f = open(filepath)
-        self.file = f.read()
+        file = f.read()
         f.close()
+        return file
 
-    def _lint_file(self):
+    def _lint_file(self, *args, **kwargs):
         """Lint the file and preserve any errors"""
-        pass
+        return restructuredtext_lint.run(*args)
 
     # TODO: Consider implementing these as flat file tests once we know what the output looks like
     def test_passes_valid_rst(self):
         """A valid reStructuredText file will not raise any errors"""
-        self._load_file(__dir__ + '/test_files/valid.rst')
-        print self.file
-        self.assertTrue(bool(restructuredtext_lint.run))
+        filepath = __dir__ + '/test_files/valid.rst'
+        content = self._load_file(filepath)
+        errors = self._lint_file(content, filepath)
+        self.assertEqual(errors, [])
 
     def test_raises_on_invalid_rst(self):
         """A invalid reStructuredText file when linted raises errors"""
-        self._load_file(__dir__ + '/test_files/invalid.rst')
-        print self.file
-        self.assertTrue(bool(restructuredtext_lint.run))
+        filepath = __dir__ + '/test_files/invalid.rst'
+        content = self._load_file(filepath)
+        errors = self._lint_file(content, filepath)
+        self.assertNotEqual(errors, [])
+        # TODO: Assert actual errors
