@@ -1,3 +1,5 @@
+import argparse
+
 import docutils
 from docutils.nodes import Element
 from docutils.parsers.rst import Parser
@@ -38,3 +40,9 @@ def lint(content, filepath=None, **kwargs):
     # Parse the content and return our collected errors
     parser.parse(content, document)
     return errors
+
+def cli():
+    parser = argparse.ArgumentParser(description='Lint a reStructuredText file or files')
+    parser.add_argument('filepath', type=str, nargs='+', help='File(s) to lint')
+    args = parser.parse_args()
+    print args
