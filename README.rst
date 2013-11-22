@@ -9,9 +9,11 @@ restructuredtext-lint
 
 This was created out of frustration with `PyPI`_; it sucks finding out your `reST`_ is invalid **after** uploading it. It is being developed in junction with a `Sublime Text`_ linter.
 
-.. _`reStructuredText`: _`reST`
-.. _`reST`: http://docutils.sourceforge.net/rst.html
+.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
 .. _`linter`: http://en.wikipedia.org/wiki/Lint_%28software%29
+.. _`reST`: _`reStructuredText`
+.. _`PyPI`: http://pypi.python.org/
+.. _`Sublime Text`: http://sublimetext.com/
 
 Getting Started
 ---------------
