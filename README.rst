@@ -1,5 +1,5 @@
 restructuredtext-lint
-#####################
+=====================
 
 .. image:: https://travis-ci.org/twolfson/restructuredtext-lint.png?branch=master
    :target: https://travis-ci.org/twolfson/restructuredtext-lint
@@ -16,7 +16,7 @@ This was created out of frustration with `PyPI`_; it sucks finding out your `reS
 .. _`Sublime Text`: http://sublimetext.com/
 
 Getting Started
-***************
+---------------
 Install the module with: ``pip install restructuredtext_lint``
 
 .. code:: python
@@ -32,15 +32,15 @@ Install the module with: ``pip install restructuredtext_lint``
     errors[0].message  # Title underline too short.
 
 Documentation
-*************
+-------------
 ``restructuredtext-lint`` exposes a ``lint`` function
 
 ``restructuredtext_lint.lint``
-==============================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lint
 
 Examples
-********
+--------
 _(Coming soon)_
 
 Contributing
