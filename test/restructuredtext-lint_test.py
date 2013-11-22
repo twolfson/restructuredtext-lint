@@ -41,7 +41,7 @@ class TestRestructuredtextLint(TestCase):
         """A valid reStructuredText file will not raise any errors"""
         filepath = __dir__ + '/test_files/valid.rst'
         content = self._load_file(filepath)
-        errors = self._lint_file(content, filepath)
+        errors = self._lint_file(content)
         self.assertEqual(errors, [])
 
     def test_raises_on_invalid_rst(self):
