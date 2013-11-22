@@ -11,7 +11,7 @@ This was created out of frustration with `PyPI`_; it sucks finding out your `reS
 
 .. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
 .. _`linter`: http://en.wikipedia.org/wiki/Lint_%28software%29
-.. _`reST`: _`reStructuredText`
+.. _`reST`: `reStructuredText`_
 .. _`PyPI`: http://pypi.python.org/
 .. _`Sublime Text`: http://sublimetext.com/
 
