@@ -1,4 +1,6 @@
 import argparse
+import json
+import sys
 
 import docutils
 from docutils.nodes import Element
@@ -42,7 +44,31 @@ def lint(content, filepath=None, **kwargs):
     return errors
 
 def cli():
-    parser = argparse.ArgumentParser(description='Lint a reStructuredText file or files')
-    parser.add_argument('filepath', type=str, nargs='+', help='File(s) to lint')
+    # Set up options and parse arguments
+    parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
+    parser.add_argument('filepath', type=str, help='File to lint')
     args = parser.parse_args()
-    print args
+
+    # Lint the file
+    with open(args.filepath) as f:
+        # Read and lin the file
+        content = f.read()
+        errors = lint(content, args.filepath)
+
+        # If there were no errors, exit gracefully
+        if not errors:
+            print 'File was clean.'
+            sys.exit(0)
+
+        # Otherwise, output the errors as JSON
+        error_dicts = [{
+            'line': error.line,
+            'source': error.source,
+            'level': error.level,
+            'type': error.type,
+            'message': error.message,
+            'full_message': error.full_message,
+        } for error in errors]
+        print json.dumps(error_dicts)
+
+        sys.exit(1)
