@@ -1,6 +1,8 @@
 import os
 from unittest import TestCase
 
+import yaml
+
 import restructuredtext_lint
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +35,6 @@ class TestRestructuredtextLint(TestCase):
         """Lint the file and preserve any errors"""
         return restructuredtext_lint.lint(*args)
 
-    # TODO: Move to flat file tests
     def test_passes_valid_rst(self):
         """A valid reStructuredText file will not raise any errors"""
         filepath = __dir__ + '/test_files/valid.rst'
@@ -43,10 +44,18 @@ class TestRestructuredtextLint(TestCase):
 
     def test_raises_on_invalid_rst(self):
         """A invalid reStructuredText file when linted raises errors"""
+        # Load and lint invalid file
         filepath = __dir__ + '/test_files/invalid.rst'
         content = self._load_file(filepath)
-        errors = self._lint_file(content, filepath)
-        self.assertEqual(len(errors), 1)
-        self.assertEqual(errors[0].line, 2)
-        self.assertEqual(errors[0].source, filepath)
-        self.assertEqual(errors[0].message, 'Title underline too short.')
+        actual_errors = self._lint_file(content, filepath)
+
+        # Load in expected errors
+        expected_yaml = self._load_file(__dir__ + '/test_files/invalid.yaml')
+        expected_errors = yaml.loads(expected_yaml)
+
+        # Assert errors against expected errors
+        self.assertEqual(len(actual_errors), len(expected_errors))
+        for i, error in enumerate(expected_errors):
+            self.assertEqual(actual_errors[i].line, expected_errors['line'])
+            self.assertEqual(actual_errors[i].source, filepath)
+            self.assertEqual(actual_errors[i].message, expected_errors['message'])
