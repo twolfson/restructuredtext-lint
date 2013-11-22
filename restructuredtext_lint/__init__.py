@@ -6,7 +6,7 @@ def lint(content, filepath=None, **kwargs):
     """Lint reStructuredText and return errors
 
     :param string content: reStructuredText to be linted
-    :param string filepath: Optional path to file, this will be returned in errors
+    :param string filepath: Optional path to file, this will be returned as the source
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """

@@ -35,9 +35,20 @@ Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` function
 
-``restructuredtext_lint.lint``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Lint
+``restructuredtext_lint.lint(content, filepath=None)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Lint `reStructuredText`_ and return errors
+
+- content `String` - `reStructuredText`_ to be linted
+- filepath `String` - Optional path to file, this will be returned as the source
+
+Returns:
+
+- errors `List` - List of errors
+    - Each error is a class from `docutils`_ with the following attrs
+        -
+
+.. _`docutils`: http://docutils.sourceforge.net/
 
 Examples
 --------
