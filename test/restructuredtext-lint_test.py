@@ -1,5 +1,9 @@
+import os
 from unittest import TestCase
+
 from restructuredtext_lint import restructuredtext_lint
+
+__dir__ = os.path.dirname(os.path.abspath(__file__))
 
 """
 # Test outlines
@@ -22,16 +26,23 @@ An invalid rst file
 class TestRestructuredtextLint(TestCase):
     def _load_file(self, filepath):
         """Load a file into memory"""
-        pass
+        f = open(filepath)
+        self.file = f.read()
+        f.close()
 
     def _lint_file(self):
         """Lint the file and preserve any errors"""
         pass
 
+    # TODO: Consider implementing these as flat file tests once we know what the output looks like
     def test_passes_valid_rst(self):
         """A valid reStructuredText file will not raise any errors"""
+        self._load_file(__dir__ + '/test_files/valid.rst')
+        print self.file
         self.assertTrue(bool(restructuredtext_lint.run))
 
     def test_raises_on_invalid_rst(self):
         """A invalid reStructuredText file when linted raises errors"""
+        self._load_file(__dir__ + '/test_files/invalid.rst')
+        print self.file
         self.assertTrue(bool(restructuredtext_lint.run))
