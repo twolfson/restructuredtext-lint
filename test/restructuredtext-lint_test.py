@@ -18,6 +18,7 @@ An invalid rst file
 # TODO: We should build out a bin script to lint files
 # TODO: This should evolve into part of sublime-linter
 # TODO: Implement this or record it as an open issue
+# TODO: Implement this as a class (options) with a sugar function that lints a string against a set of options
 An invalid rst file
     when linted with the `fail_first` parameter
         raises on the first error
