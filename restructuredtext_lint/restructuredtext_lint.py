@@ -1,4 +1,5 @@
 import docutils
+from docutils.nodes import Element
 from docutils.parsers.rst import Parser
 
 def run(content, filepath=None, **kwargs):
@@ -17,6 +18,11 @@ def run(content, filepath=None, **kwargs):
     # Collect errors via an observer
     errors = []
     def error_collector(data):
+        # Mutate the data since it was just generated
+        data.message = Element.astext(data.children[0])
+        data.full_message = Element.astext(data)
+
+        # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
 

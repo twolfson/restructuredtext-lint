@@ -1,6 +1,5 @@
 import os
 from unittest import TestCase
-from docutils.nodes import Element
 
 from restructuredtext_lint import restructuredtext_lint
 
@@ -53,7 +52,7 @@ class TestRestructuredtextLint(TestCase):
         self.assertEqual(len(errors), 1)
         self.assertEqual(errors[0].line, 2)
         self.assertEqual(errors[0].source, filepath)
-        self.assertEqual(Element.astext(errors[0]),"""Title underline too short.
+        self.assertEqual(errors[0].message, """Title underline too short.
 
 Hello
 ====""")
