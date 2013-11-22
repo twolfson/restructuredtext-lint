@@ -39,14 +39,22 @@ Documentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lint `reStructuredText`_ and return errors
 
-- content `String` - `reStructuredText`_ to be linted
-- filepath `String` - Optional path to file, this will be returned as the source
+- content ``String`` - `reStructuredText`_ to be linted
+- filepath ``String`` - Optional path to file, this will be returned as the source
 
 Returns:
 
-- errors `List` - List of errors
+- errors ``List`` - List of errors
     - Each error is a class from `docutils`_ with the following attrs
-        -
+        - line ``Integer`` - Line where the error occurred
+        - source ``String`` - ``filepath`` provided in parameters
+        - level ``Integer`` - Level of the warning
+            - Levels represent 'info': 1, 'warning': 2, 'error': 3, 'severe': 4
+        - type ``String`` - Noun describing the error level
+            - Levels can be 'INFO', 'WARNING', 'ERROR', or 'SEVERE'
+        - message ``String`` - Error message
+        - full_message ``String`` - Error message and source lines where the error occurred
+    - It should be noted that ``level``, ``type``, ``message``, and ``full_message`` are custom attrs added onto the original ``system_message``
 
 .. _`docutils`: http://docutils.sourceforge.net/
 
