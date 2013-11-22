@@ -5,7 +5,13 @@ restructuredtext-lint
    :target: https://travis-ci.org/twolfson/restructuredtext-lint
    :alt: Build Status
 
-reStructuredText linter
+`reStructuredText`_ `linter`_
+
+This was created out of frustration with `PyPI`_; it sucks finding out your `reST`_ is invalid **after** uploading it. It is being developed in junction with a `Sublime Text`_ linter.
+
+.. _`reStructuredText`: _`reST`
+.. _`reST`: http://docutils.sourceforge.net/rst.html
+.. _`linter`: http://en.wikipedia.org/wiki/Lint_%28software%29
 
 Getting Started
 ---------------
@@ -13,12 +19,23 @@ Install the module with: ``pip install restructuredtext_lint``
 
 .. code:: python
 
-    from restructuredtext_lint import run
-    run()
+    import restructuredtext_lint
+    errors = restructuredtext_lint.lint("""
+    Hello World
+    =======
+    """)
+
+    # `errors` will be list of system messages
+    # [<system_message: <paragraph...><literal_block...>>]
+    errors[0].message  # Title underline too short.
 
 Documentation
 -------------
-_(Coming soon)_
+``restructuredtext-lint`` exposes a ``lint`` function
+
+``restructuredtext_lint.lint``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Lint
 
 Examples
 --------
