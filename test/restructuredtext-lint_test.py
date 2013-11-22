@@ -57,5 +57,7 @@ class TestRestructuredtextLint(TestCase):
         self.assertEqual(len(actual_errors), len(expected_errors))
         for i, error in enumerate(expected_errors):
             self.assertEqual(actual_errors[i].line, expected_errors[i]['line'])
+            self.assertEqual(actual_errors[i].level, expected_errors[i]['level'])
+            self.assertEqual(actual_errors[i].type, expected_errors[i]['type'])
             self.assertEqual(actual_errors[i].source, filepath)
             self.assertEqual(actual_errors[i].message, expected_errors[i]['message'])
