@@ -1,0 +1,4 @@
+*.pyc
+build/
+dist/
+restructuredtext_lint.egg-info
