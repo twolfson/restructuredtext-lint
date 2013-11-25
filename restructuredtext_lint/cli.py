@@ -2,11 +2,11 @@ import argparse
 import json
 import sys
 
-import lint
+from .lint import lint_file
 
 def _main(filepath, format='text', stream=sys.stdout):
     # Read and lint the file
-    errors = lint.lint_file(filepath)
+    errors = lint_file(filepath)
 
     # If there were no errors, exit gracefully
     if not errors:
