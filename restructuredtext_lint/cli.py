@@ -37,7 +37,7 @@ def main():
     # Set up options and parse arguments
     parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
     parser.add_argument('filepath', type=str, help='File to lint')
-    # TODO: Add format
+    parser.add_argument('--format', type=str, help='Format of output (e.g. text, json)')
     args = parser.parse_args()
 
     # Run the main argument
