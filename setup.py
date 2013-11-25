@@ -18,7 +18,10 @@ setup(
     url='https://github.com/twolfson/restructuredtext-lint',
     download_url='https://github.com/twolfson/restructuredtext-lint/archive/master.zip',
     entry_points={
-        'console_scripts': ['rst-lint = restructuredtext_lint.cli:main']
+        'console_scripts': [
+            'restructuredtext-lint = restructuredtext_lint.cli:main',
+            'rst-lint = restructuredtext_lint.cli:main'
+        ]
     },
     packages=find_packages(),
     license='UNLICENSE',
