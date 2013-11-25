@@ -2,18 +2,18 @@ import argparse
 import json
 import sys
 
-import restructuredtext_lint
+import lint
 
 def _main(filepath, format='text', stream=sys.stdout):
-    # Read and lin the file
-    errors = restructuredtext_lint.lint_file(filepath)
+    # Read and lint the file
+    errors = lint.lint_file(filepath)
 
     # If there were no errors, exit gracefully
     if not errors:
         if format == 'json':
             stream.write(json.dumps(errors))
         else:
-            stream.write('File was clean.')
+            stream.write('File was clean.\n')
         sys.exit(0)
 
     # Otherwise, output the errors and exit angrily
@@ -30,7 +30,7 @@ def _main(filepath, format='text', stream=sys.stdout):
     else:
         for error in errors:
             # WARNING readme.rst:12 Title underline too short.
-            stream.write('%s %s:%s %s' % (error.type, error.source, error.line, error.message))
+            stream.write('%s %s:%s %s\n' % (error.type, error.source, error.line, error.message))
     sys.exit(1)
 
 def main():
@@ -41,4 +41,4 @@ def main():
     args = parser.parse_args()
 
     # Run the main argument
-    _main(**args)
+    _main(**args.__dict__)
