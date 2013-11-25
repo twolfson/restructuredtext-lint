@@ -1,12 +1,8 @@
-import argparse
-import json
-import sys
-
 import docutils
 from docutils.nodes import Element
 from docutils.parsers.rst import Parser
 
-def lint(content, filepath=None, **kwargs):
+def lint(content, filepath=None):
     """Lint reStructuredText and return errors
 
     :param string content: reStructuredText to be linted
@@ -42,3 +38,10 @@ def lint(content, filepath=None, **kwargs):
     # Parse the content and return our collected errors
     parser.parse(content, document)
     return errors
+
+def lint_file(filepath):
+    """Lint a specific file"""
+    f = open(filepath)
+    content = f.read()
+    f.close()
+    return lint(content, filepath)

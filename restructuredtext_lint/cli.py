@@ -1,24 +1,23 @@
-def _main(filepath, stream=print):
-    pass
+import argparse
+import json
+import sys
 
-def main():
-    # Set up options and parse arguments
-    parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
-    parser.add_argument('filepath', type=str, help='File to lint')
-    args = parser.parse_args()
+import restructuredtext_lint
 
-    # Lint the file
-    with open(args.filepath) as f:
-        # Read and lin the file
-        content = f.read()
-        errors = lint(content, args.filepath)
+def _main(filepath, format='text', stream=sys.stdout):
+    # Read and lin the file
+    errors = restructuredtext_lint.lint_file(filepath)
 
-        # If there were no errors, exit gracefully
-        if not errors:
-            print 'File was clean.'
-            sys.exit(0)
+    # If there were no errors, exit gracefully
+    if not errors:
+        if format == 'json':
+            stream.write(json.dumps(errors))
+        else:
+            stream.write('File was clean.')
+        sys.exit(0)
 
-        # Otherwise, output the errors as JSON
+    # Otherwise, output the errors and exit angrily
+    if format == 'json':
         error_dicts = [{
             'line': error.line,
             'source': error.source,
@@ -27,6 +26,19 @@ def main():
             'message': error.message,
             'full_message': error.full_message,
         } for error in errors]
-        print json.dumps(error_dicts)
+        stream.write(json.dumps(error_dicts))
+    else:
+        for error in errors:
+            # WARNING readme.rst:12 Title underline too short.
+            stream.write('%s %s:%s %s' % (error.type, error.source, error.line, error.message))
+    sys.exit(1)
 
-        sys.exit(1)
+def main():
+    # Set up options and parse arguments
+    parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
+    parser.add_argument('filepath', type=str, help='File to lint')
+    # TODO: Add format
+    args = parser.parse_args()
+
+    # Run the main argument
+    _main(**args)
