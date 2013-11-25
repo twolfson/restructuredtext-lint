@@ -49,6 +49,9 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
       -h, --help       show this help message and exit
       --format FORMAT  Format of output (e.g. text, json)
 
+    $ rst-lint README.rst
+    WARNING README.rst:2 Title underline too short.
+
 Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` function
