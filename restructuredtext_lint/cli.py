@@ -11,7 +11,7 @@ def _main(filepath, format='text', stream=sys.stdout):
     # If there were no errors, exit gracefully
     if not errors:
         if format == 'json':
-            stream.write(json.dumps(errors))
+            stream.write('[]')
         else:
             stream.write('File was clean.\n')
         sys.exit(0)
