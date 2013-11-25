@@ -31,6 +31,24 @@ Install the module with: ``pip install restructuredtext_lint``
     # [<system_message: <paragraph...><literal_block...>>]
     errors[0].message  # Title underline too short.
 
+CLI Utility
+^^^^^^^^^^^
+For your convenience, we present a CLI utility ``rst-lint`` (also available as ``restructuredtext-lint``).
+
+.. code:: bash
+
+    $ rst-lint --help
+    usage: rst-lint [-h] [--format FORMAT] filepath
+
+    Lint a reStructuredText file
+
+    positional arguments:
+      filepath         File to lint
+
+    optional arguments:
+      -h, --help       show this help message and exit
+      --format FORMAT  Format of output (e.g. text, json)
+
 Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` function
