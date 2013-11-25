@@ -1,4 +1,4 @@
 # Export lint functions
 import lint
+lint_file = lint.lint_file
 lint = lint.lint
-lint = lint.lint_file
