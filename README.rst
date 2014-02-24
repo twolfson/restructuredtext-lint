@@ -38,7 +38,7 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
 .. code:: bash
 
     $ rst-lint --help
-    usage: rst-lint [-h] [--format FORMAT] filepath
+    usage: rst-lint [-h] [--format FORMAT] [--encoding ENC] filepath
 
     Lint a reStructuredText file
 
@@ -48,6 +48,7 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     optional arguments:
       -h, --help       show this help message and exit
       --format FORMAT  Format of output (e.g. text, json)
+      --encoding ENC   Encoding of the source file (e.g. utf-8)
 
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.

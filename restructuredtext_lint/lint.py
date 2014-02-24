@@ -1,3 +1,4 @@
+import io
 import docutils
 from docutils.nodes import Element
 from docutils.parsers.rst import Parser
@@ -39,9 +40,9 @@ def lint(content, filepath=None):
     parser.parse(content, document)
     return errors
 
-def lint_file(filepath):
+def lint_file(filepath, encoding=None):
     """Lint a specific file"""
-    f = open(filepath)
+    f = io.open(filepath, encoding=encoding or 'ascii')
     content = f.read()
     f.close()
     return lint(content, filepath)
