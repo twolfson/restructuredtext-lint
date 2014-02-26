@@ -62,13 +62,6 @@ class TestRestructuredtextLint(TestCase):
             self.assertEqual(actual_errors[i].source, filepath)
             self.assertEqual(actual_errors[i].message, expected_errors[i]['message'])
 
-    def test_encoding_ascii_fails_with_utf8_document(self):
-        """A document with non-ascii characters raises an error if no encoding is specified."""
-        filepath = __dir__ + '/test_files/utf8.rst'
-        self.assertRaises(UnicodeDecodeError,
-                          restructuredtext_lint.lint_file,
-                          filepath)
-
     def test_encoding_utf8(self):
         """A document with utf-8 characters is valid."""
         filepath = __dir__ + '/test_files/utf8.rst'
