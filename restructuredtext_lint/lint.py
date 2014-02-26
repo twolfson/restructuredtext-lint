@@ -40,9 +40,9 @@ def lint(content, filepath=None):
     parser.parse(content, document)
     return errors
 
-def lint_file(filepath, encoding=None):
+def lint_file(filepath, encoding='ascii'):
     """Lint a specific file"""
-    f = io.open(filepath, encoding=encoding or 'ascii')
+    f = io.open(filepath, encoding=encoding)
     content = f.read()
     f.close()
     return lint(content, filepath)

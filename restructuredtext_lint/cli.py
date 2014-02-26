@@ -4,7 +4,7 @@ import sys
 
 from .lint import lint_file
 
-def _main(filepath, format='text', stream=sys.stdout, encoding=None):
+def _main(filepath, format='text', stream=sys.stdout, encoding='ascii'):
     # Read and lint the file
     errors = lint_file(filepath, encoding=encoding)
 
@@ -38,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
     parser.add_argument('filepath', type=str, help='File to lint')
     parser.add_argument('--format', type=str, help='Format of output (e.g. text, json)')
-    parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
+    parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)', default='ascii')
     args = parser.parse_args()
 
     # Run the main argument
