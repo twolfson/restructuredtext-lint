@@ -67,3 +67,10 @@ class TestRestructuredtextLint(TestCase):
         filepath = __dir__ + '/test_files/utf8.rst'
         errors = restructuredtext_lint.lint_file(filepath, encoding='utf-8')
         self.assertEqual(errors, [])
+
+    def test_second_heading_short_line_number(self):
+        """A document with a short second heading raises errors that include a line number
+
+        This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/5
+        """
+        pass
