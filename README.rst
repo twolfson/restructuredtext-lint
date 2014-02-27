@@ -82,6 +82,14 @@ Returns:
 
 ``restructuredtext_lint.lint_file(filepath, encoding=None)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Lint a `reStructuredText`_ file and return errors
+
+- filepath ``String`` - Path to file for linting
+- encoding ``String`` - Encoding to read file in as
+    - When ``None`` is provided, it will use OS default as provided by `locale.getpreferredencoding`_
+    - The list of supported encodings can be found at http://docs.python.org/2/library/codecs.html#standard-encodings
+
+.. _`locale.getpreferredencoding`: http://docs.python.org/2/library/locale.html#locale.getpreferredencoding
 
 Examples
 --------
