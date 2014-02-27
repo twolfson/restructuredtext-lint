@@ -27,8 +27,10 @@ def lint(content, filepath=None):
     errors = []
     def error_collector(data):
         # Mutate the data since it was just generated
-        data.type = data['type']
+        data.line = data['line']
+        data.source = data['source']
         data.level = data['level']
+        data.type = data['type']
         data.message = Element.astext(data.children[0])
         data.full_message = Element.astext(data)
 
