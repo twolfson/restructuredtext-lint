@@ -73,4 +73,6 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/5
         """
-        pass
+        filepath = __dir__ + '/test_files/second_short_heading.rst'
+        errors = restructuredtext_lint.lint_file(filepath)
+        self.assertEqual(errors[0].line, 6)
