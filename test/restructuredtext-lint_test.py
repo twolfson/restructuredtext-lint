@@ -76,3 +76,4 @@ class TestRestructuredtextLint(TestCase):
         filepath = __dir__ + '/test_files/second_short_heading.rst'
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertEqual(errors[0].line, 6)
+        self.assertEqual(errors[0].source, filepath)
