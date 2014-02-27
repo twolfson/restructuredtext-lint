@@ -55,7 +55,7 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
 
 Documentation
 -------------
-``restructuredtext-lint`` exposes a ``lint`` function
+``restructuredtext-lint`` exposes a ``lint`` and ``lint_file`` function
 
 ``restructuredtext_lint.lint(content, filepath=None)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -79,6 +79,9 @@ Returns:
     - It should be noted that ``level``, ``type``, ``message``, and ``full_message`` are custom attrs added onto the original ``system_message``
 
 .. _`docutils`: http://docutils.sourceforge.net/
+
+``restructuredtext_lint.lint_file(filepath, encoding=None)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Examples
 --------
