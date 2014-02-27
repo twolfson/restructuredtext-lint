@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.4.0 - Repaired regression for bad parses that did not return all promised data (e.g. line number). Fixes #5
+
 0.3.1 - Documented `lint_file` method
 
 0.3.0 - Moved from `read` to `io.read`, allowing specification of `encoding` from CLI. Attribution to @coldfix
