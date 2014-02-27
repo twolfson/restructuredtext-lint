@@ -91,9 +91,7 @@ Lint a `reStructuredText`_ file and return errors
 
 .. _`locale.getpreferredencoding`: http://docs.python.org/2/library/locale.html#locale.getpreferredencoding
 
-Returns:
-
-Same structure as `restructuredtext_lint.lint`
+Returns: Same structure as ``restructuredtext_lint.lint``
 
 Examples
 --------
