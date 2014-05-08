@@ -19,20 +19,19 @@ def lint(content, filepath=None):
     pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
 
     # Read content
-    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l216
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
     if pub.settings is None:
         pub.process_command_line()
     pub.set_io()
     pub.document = pub.reader.read(pub.source, pub.parser,
                                  pub.settings)
-    print pub.document
-    pub.apply_transforms()
 
-    parser = Parser()
-    settings = docutils.frontend.OptionParser(
-                    components=(docutils.parsers.rst.Parser,)
-                    ).get_default_values()
-    document = docutils.utils.new_document(filepath, settings=settings)
+    # Apply transforms/collect errors
+    pub.document.transformer.populate_from_components(
+            (pub.source, pub.reader, pub.reader.parser, pub.writer,
+             pub.destination))
+
+    document = pub.document
 
     # Disable stdout
     # TODO: Find a more proper way to do this
@@ -53,10 +52,10 @@ def lint(content, filepath=None):
         # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
-    print errors
+    print 'wat', errors
 
     # Parse the content and return our collected errors
-    parser.parse(content, document)
+    document.transformer.apply_transforms()
     return errors
 
 def lint_file(filepath, encoding=None):
