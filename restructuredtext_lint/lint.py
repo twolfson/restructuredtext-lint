@@ -20,8 +20,8 @@ def lint(content, filepath=None):
 
     # Read content
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
-    if pub.settings is None:
-        pub.process_command_line()
+    option_parser = pub.setup_option_parser()
+    pub.settings = option_parser.parse_args(['file.rst'])
     pub.set_io()
     pub.document = pub.reader.read(pub.source, pub.parser,
                                  pub.settings)
