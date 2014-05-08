@@ -20,22 +20,26 @@ def lint(content, filepath=None):
 
     # Read content
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
+    # if pub.settings is None:
+    #     pub.process_command_line(None)
+    # print pub.settings
     settings = docutils.frontend.OptionParser(
                     components=(docutils.parsers.rst.Parser,)
                     ).get_default_values()
 
-    # option_parser = pub.setup_option_parser(**{})
-    pub.settings = settings
-    pub.set_io()
-    pub.document = pub.reader.read(pub.source, pub.parser,
-                                 pub.settings)
+    # pub.set_io()
+    print 'hi2'
+    document = docutils.utils.new_document(filepath, settings=settings)
+    pub.reader.parser.parse(content, document)
+    # document = pub.reader.read(pub.source, pub.parser,
+    #                              pub.settings)
+
+    print 'hi'
 
     # Apply transforms/collect errors
-    pub.document.transformer.populate_from_components(
+    document.transformer.populate_from_components(
             (pub.source, pub.reader, pub.reader.parser, pub.writer,
              pub.destination))
-
-    document = pub.document
 
     # Disable stdout
     # TODO: Find a more proper way to do this
