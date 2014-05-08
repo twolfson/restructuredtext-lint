@@ -26,6 +26,7 @@ def lint(content, filepath=None):
     pub.document = pub.reader.read(pub.source, pub.parser,
                                  pub.settings)
     print pub.document
+    pub.apply_transforms()
 
     parser = Parser()
     settings = docutils.frontend.OptionParser(
