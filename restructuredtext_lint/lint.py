@@ -1,8 +1,6 @@
 import io
-import docutils
 from docutils.core import Publisher
 from docutils.nodes import Element
-from docutils.parsers.rst import Parser
 
 def lint(content, filepath=None):
     """Lint reStructuredText and return errors
