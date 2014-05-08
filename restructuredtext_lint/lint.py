@@ -18,7 +18,10 @@ def lint(content, filepath=None):
     pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
 
     # Configure publisher
+    # DEV: We cannot use `process_command_line` since it processes `sys.argv` which is for `rst-lint`, not `docutils`
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l143
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l118
     settings = pub.get_settings()
     pub.set_io()
 
