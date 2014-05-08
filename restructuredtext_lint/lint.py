@@ -1,4 +1,5 @@
 import io
+from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
@@ -25,11 +26,7 @@ def lint(content, filepath=None):
     # DEV: We avoid the `read` method because when `source` is `None`, it attempts to read from `stdin`. However, we already know our content.
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
     reader = pub.reader
-    reader.source = pub.source
-    if not reader.parser:
-        reader.parser = pub.parser
-    reader.settings = settings
-    document = reader.new_document()
+    document = utils.new_document(filepath, settings)
 
     # Disable stdout
     # TODO: Find a more proper way to do this
