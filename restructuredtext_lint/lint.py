@@ -37,6 +37,7 @@ def lint(content, filepath=None):
         # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
+    print errors
 
     # Parse the content and return our collected errors
     parser.parse(content, document)
