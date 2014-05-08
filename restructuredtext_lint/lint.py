@@ -1,5 +1,6 @@
 import io
 import docutils
+from docutils.core import Publisher
 from docutils.nodes import Element
 from docutils.parsers.rst import Parser
 
@@ -11,7 +12,12 @@ def lint(content, filepath=None):
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    # Generate a new parser
+    # Generate a new parser (copying `rst2html.py` flow)
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/tools/rst2html.py
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l348
+    pub = Publisher(None, None, None, settings=None)
+    pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
+
     parser = Parser()
     settings = docutils.frontend.OptionParser(
                     components=(docutils.parsers.rst.Parser,)
