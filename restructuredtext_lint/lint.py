@@ -48,7 +48,6 @@ def lint(content, filepath=None):
     # Collect errors via an observer
     errors = []
     def error_collector(data):
-        print 'error', data
         # Mutate the data since it was just generated
         data.line = data['line']
         data.source = data['source']
@@ -62,6 +61,8 @@ def lint(content, filepath=None):
     document.reporter.attach_observer(error_collector)
 
     # Parse the content and return our collected errors
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/transforms/__init__.py#l159
+    # DEV: We cannot use `apply_transforms` since it has `attach_observer` baked in. We want only our listener.
     transformer = document.transformer
     while transformer.transforms:
         if not transformer.sorted:
@@ -73,7 +74,6 @@ def lint(content, filepath=None):
         transform = transform_class(transformer.document, startnode=pending)
         transform.apply(**kwargs)
         transformer.applied.append((priority, transform_class, pending, kwargs))
-    print 'wat', errors
     return errors
 
 def lint_file(filepath, encoding=None):
