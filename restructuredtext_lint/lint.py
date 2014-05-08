@@ -55,7 +55,17 @@ def lint(content, filepath=None):
     document.reporter.attach_observer(error_collector)
 
     # Parse the content and return our collected errors
-    document.transformer.apply_transforms()
+    transformer = document.transformer
+    while transformer.transforms:
+        if not transformer.sorted:
+            # Unsorted initially, and whenever a transform is added.
+            transformer.transforms.sort()
+            transformer.transforms.reverse()
+            transformer.sorted = 1
+        priority, transform_class, pending, kwargs = transformer.transforms.pop()
+        transform = transform_class(transformer.document, startnode=pending)
+        transform.apply(**kwargs)
+        transformer.applied.append((priority, transform_class, pending, kwargs))
     print 'wat', errors
     return errors
 
