@@ -28,15 +28,8 @@ def lint(content, filepath=None):
     reader.source = pub.source
     if not reader.parser:
         reader.parser = pub.parser
-    reader.settings = settings
-    reader.input = content
-    reader.parse()
-    document = reader.document
-
-    # Apply transforms/collect errors
-    document.transformer.populate_from_components(
-            (pub.source, pub.reader, pub.reader.parser, pub.writer,
-             pub.destination))
+    reader.settings = pub.settings
+    document = reader.new_document()
 
     # Disable stdout
     # TODO: Find a more proper way to do this
@@ -57,6 +50,12 @@ def lint(content, filepath=None):
         # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
+    reader.parser.parse(content, document)
+
+    # Apply transforms/collect errors
+    document.transformer.populate_from_components(
+            (pub.source, pub.reader, pub.reader.parser, pub.writer,
+             pub.destination))
 
     # Parse the content and return our collected errors
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/transforms/__init__.py#l159
