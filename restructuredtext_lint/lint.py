@@ -41,6 +41,7 @@ def lint(content, filepath=None):
     # Collect errors via an observer
     errors = []
     def error_collector(data):
+        print 'error', data
         # Mutate the data since it was just generated
         data.line = data['line']
         data.source = data['source']
@@ -52,10 +53,20 @@ def lint(content, filepath=None):
         # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
-    print 'wat', errors
 
     # Parse the content and return our collected errors
-    document.transformer.apply_transforms()
+    transformer = document.transformer
+    while transformer.transforms:
+        if not transformer.sorted:
+            # Unsorted initially, and whenever a transform is added.
+            transformer.transforms.sort()
+            transformer.transforms.reverse()
+            transformer.sorted = 1
+        priority, transform_class, pending, kwargs = transformer.transforms.pop()
+        transform = transform_class(transformer.document, startnode=pending)
+        transform.apply(**kwargs)
+        transformer.applied.append((priority, transform_class, pending, kwargs))
+    print 'wat', errors
     return errors
 
 def lint_file(filepath, encoding=None):
