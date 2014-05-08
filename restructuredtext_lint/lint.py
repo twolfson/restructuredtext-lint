@@ -26,8 +26,12 @@ def lint(content, filepath=None):
     # Parse content
     # DEV: We avoid the `read/parse` methods because they require knowing ths `source_path`
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
-    document = docutils.utils.new_document(filepath, settings=settings)
-    pub.reader.parser.parse(content, document)
+    pub.reader.source = pub.source
+    pub.reader.parser = pub.parser
+    pub.reader.settings = settings
+    pub.reader.input = content
+    pub.reader.parse()
+    document = pub.reader.document
 
     # Apply transforms/collect errors
     document.transformer.populate_from_components(
