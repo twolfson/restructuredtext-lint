@@ -24,7 +24,7 @@ def lint(content, filepath=None):
     #     pub.process_command_line(None)
     # print pub.settings
     settings = pub.get_settings()
-    # pub.set_io()
+    pub.set_io()
     print 'hi2'
     document = docutils.utils.new_document(filepath, settings=settings)
     pub.reader.parser.parse(content, document)
@@ -44,7 +44,6 @@ def lint(content, filepath=None):
     document.reporter.stream = None
 
     # Collect errors via an observer
-    print 'wat'
     errors = []
     def error_collector(data):
         print 'error', data
