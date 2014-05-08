@@ -24,6 +24,7 @@ def lint(content, filepath=None):
 
     # Prepare a document to parse on
     # DEV: We avoid the `read` method because when `source` is `None`, it attempts to read from `stdin`. However, we already know our content.
+    # DEV: We create our document without `parse` because we need to attach observer's before parsing
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
     reader = pub.reader
     document = utils.new_document(filepath, settings)
@@ -48,17 +49,17 @@ def lint(content, filepath=None):
         errors.append(data)
     document.reporter.attach_observer(error_collector)
 
-    # Parse the content
+    # Parse the content (and collect errors)
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l75
     reader.parser.parse(content, document)
 
-    # Apply transforms/collect errors
+    # Apply transforms (and more collect errors)
+    # DEV: We cannot use `apply_transforms` since it has `attach_observer` baked in. We want only our listener.
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l195
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/transforms/__init__.py#l159
     document.transformer.populate_from_components(
             (pub.source, pub.reader, pub.reader.parser, pub.writer,
              pub.destination))
-
-    # Parse the content and return our collected errors
-    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/transforms/__init__.py#l159
-    # DEV: We cannot use `apply_transforms` since it has `attach_observer` baked in. We want only our listener.
     transformer = document.transformer
     while transformer.transforms:
         if not transformer.sorted:
