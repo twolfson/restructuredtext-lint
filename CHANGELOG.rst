@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.6.0 - Rewrote library to be inline with `rst2html.py` flow. Added error collecting on transforms. Fixes #6
+
 0.5.0 - Relocated tests to follow convention and make running specific tests easier
 
 0.4.0 - Repaired regression for bad parses that did not return all promised data (e.g. line number). Fixes #5
