@@ -21,14 +21,14 @@ def lint(content, filepath=None):
     settings = pub.get_settings()
     pub.set_io()
 
-    # Parse content
+    # Prepare a document to parse on
     # DEV: We avoid the `read` method because when `source` is `None`, it attempts to read from `stdin`. However, we already know our content.
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
     reader = pub.reader
     reader.source = pub.source
     if not reader.parser:
         reader.parser = pub.parser
-    reader.settings = pub.settings
+    reader.settings = settings
     document = reader.new_document()
 
     # Disable stdout
@@ -50,6 +50,8 @@ def lint(content, filepath=None):
         # Save the error
         errors.append(data)
     document.reporter.attach_observer(error_collector)
+
+    # Parse the content
     reader.parser.parse(content, document)
 
     # Apply transforms/collect errors
