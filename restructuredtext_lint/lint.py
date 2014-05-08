@@ -18,6 +18,15 @@ def lint(content, filepath=None):
     pub = Publisher(None, None, None, settings=None)
     pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
 
+    # Read content
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l216
+    if pub.settings is None:
+        pub.process_command_line()
+    pub.set_io()
+    pub.document = pub.reader.read(pub.source, pub.parser,
+                                 pub.settings)
+    print pub.document
+
     parser = Parser()
     settings = docutils.frontend.OptionParser(
                     components=(docutils.parsers.rst.Parser,)
