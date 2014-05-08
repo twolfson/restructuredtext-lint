@@ -18,20 +18,16 @@ def lint(content, filepath=None):
     pub = Publisher(None, None, None, settings=None)
     pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
 
-    # Read content
+    # Configure publisher
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
-    # if pub.settings is None:
-    #     pub.process_command_line(None)
-    # print pub.settings
     settings = pub.get_settings()
     pub.set_io()
-    print 'hi2'
+
+    # Parse content
+    # DEV: We avoid the `read/parse` methods because they require knowing ths `source_path`
+    # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
     document = docutils.utils.new_document(filepath, settings=settings)
     pub.reader.parser.parse(content, document)
-    # document = pub.reader.read(pub.source, pub.parser,
-    #                              pub.settings)
-
-    print 'hi'
 
     # Apply transforms/collect errors
     document.transformer.populate_from_components(
