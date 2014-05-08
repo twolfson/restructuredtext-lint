@@ -8,15 +8,6 @@ import restructuredtext_lint
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 
 """
-# Test outlines
-A valid rst file
-    when linted
-        does not return errors
-
-An invalid rst file
-    when linted
-        returns errors
-
 # TODO: Implement this as a class (options) with a sugar function that lints a string against a set of options
 An invalid rst file
     when linted with the `fail_first` parameter
@@ -85,5 +76,4 @@ class TestRestructuredtextLint(TestCase):
         """
         filepath = __dir__ + '/test_files/invalid_target.rst'
         errors = restructuredtext_lint.lint_file(filepath)
-        # TODO: Get more expansive assertion
-        self.assertIn('target', errors[0].message)
+        self.assertIn('Unknown target name', errors[0].message)
