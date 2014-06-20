@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.7.0 - Increased `halt_level` to 5 (never halt) to collect all errors. Fixes #7
+
 0.6.0 - Rewrote library to be inline with `rst2html.py` flow. Added error collecting on transforms. Fixes #6
 
 0.5.0 - Relocated tests to follow convention and make running specific tests easier
