@@ -22,7 +22,7 @@ def lint(content, filepath=None):
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l201
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l143
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l118
-    settings = pub.get_settings()
+    settings = pub.get_settings(halt_level=5)
     pub.set_io()
 
     # Prepare a document to parse on
