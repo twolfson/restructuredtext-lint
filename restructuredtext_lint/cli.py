@@ -4,6 +4,7 @@ import sys
 
 from .lint import lint_file
 
+
 def _main(filepath, format='text', stream=sys.stdout, encoding=None):
     # Read and lint the file
     errors = lint_file(filepath, encoding=encoding)
@@ -32,6 +33,7 @@ def _main(filepath, format='text', stream=sys.stdout, encoding=None):
             # WARNING readme.rst:12 Title underline too short.
             stream.write('%s %s:%s %s\n' % (error.type, error.source, error.line, error.message))
     sys.exit(1)
+
 
 def main():
     # Set up options and parse arguments
