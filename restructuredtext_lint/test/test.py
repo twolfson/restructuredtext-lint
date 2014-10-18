@@ -14,6 +14,7 @@ An invalid rst file
         raises on the first error
 """
 
+
 class TestRestructuredtextLint(TestCase):
     def _load_file(self, filepath):
         """Load a file into memory"""

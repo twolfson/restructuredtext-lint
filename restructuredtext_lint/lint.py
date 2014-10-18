@@ -3,6 +3,7 @@ from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
+
 def lint(content, filepath=None):
     """Lint reStructuredText and return errors
 
@@ -26,7 +27,8 @@ def lint(content, filepath=None):
     pub.set_io()
 
     # Prepare a document to parse on
-    # DEV: We avoid the `read` method because when `source` is `None`, it attempts to read from `stdin`. However, we already know our content.
+    # DEV: We avoid the `read` method because when `source` is `None`, it attempts to read from `stdin`.
+    #      However, we already know our content.
     # DEV: We create our document without `parse` because we need to attach observer's before parsing
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/readers/__init__.py#l66
     reader = pub.reader
@@ -39,6 +41,7 @@ def lint(content, filepath=None):
 
     # Collect errors via an observer
     errors = []
+
     def error_collector(data):
         # Mutate the data since it was just generated
         data.line = data['line']
@@ -61,8 +64,8 @@ def lint(content, filepath=None):
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l195
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/transforms/__init__.py#l159
     document.transformer.populate_from_components(
-            (pub.source, pub.reader, pub.reader.parser, pub.writer,
-             pub.destination))
+        (pub.source, pub.reader, pub.reader.parser, pub.writer, pub.destination)
+    )
     transformer = document.transformer
     while transformer.transforms:
         if not transformer.sorted:
@@ -75,6 +78,7 @@ def lint(content, filepath=None):
         transform.apply(**kwargs)
         transformer.applied.append((priority, transform_class, pending, kwargs))
     return errors
+
 
 def lint_file(filepath, encoding=None):
     """Lint a specific file"""

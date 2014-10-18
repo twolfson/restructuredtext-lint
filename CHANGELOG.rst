@@ -1,5 +1,9 @@
 restructuredtext-lint changelog
 ===============================
+0.9.0 - Added `flake8` linting via @berendt in #10
+
+0.8.0 - Loosened `docutils` dependency to allow minor fluctuations. Fixes #9
+
 0.7.0 - Increased `halt_level` to 5 (never halt) to collect all errors. Fixes #7
 
 0.6.0 - Rewrote library to be inline with `rst2html.py` flow. Added error collecting on transforms. Fixes #6
