@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.10.0 - Remerged change from `0.8.0` to loosen `docutils` dependency to allow minor fluctuations. Fixes #9
+
 0.9.0 - Added `flake8` linting via @berendt in #10
 
 0.8.0 - Loosened `docutils` dependency to allow minor fluctuations. Fixes #9
