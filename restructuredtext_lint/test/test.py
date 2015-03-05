@@ -87,3 +87,13 @@ class TestRestructuredtextLint(TestCase):
         filepath = __dir__ + '/test_files/invalid_line_mismatch.rst'
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('Title overline & underline mismatch', errors[0].message)
+
+    def test_invalid_link(self):
+        """A document with a bad link raises an error
+
+        This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/12
+        """
+        filepath = __dir__ + '/test_files/bad_links.rst'
+        errors = restructuredtext_lint.lint_file(filepath)
+        print errors
+        # self.assertIn('Title overline & underline mismatch', errors[0].message)
