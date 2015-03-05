@@ -68,7 +68,8 @@ Returns:
 
 - errors ``List`` - List of errors
     - Each error is a class from `docutils`_ with the following attrs
-        - line ``Integer`` - Line where the error occurred
+        - line ``Integer|None`` - Line where the error occurred
+            - On rare occasions, this will be ``None`` (e.g. anonymous link mismatch)
         - source ``String`` - ``filepath`` provided in parameters
         - level ``Integer`` - Level of the warning
             - Levels represent 'info': 1, 'warning': 2, 'error': 3, 'severe': 4
