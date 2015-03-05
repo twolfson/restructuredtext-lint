@@ -96,4 +96,4 @@ class TestRestructuredtextLint(TestCase):
         filepath = __dir__ + '/test_files/invalid_link.rst'
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('Anonymous hyperlink mismatch: 1 references but 0 targets.', errors[0].message)
-        self.assertIn('Hyperlink target "hello" is not referenced.', errors[0].message)
+        self.assertIn('Hyperlink target "hello" is not referenced.', errors[1].message)
