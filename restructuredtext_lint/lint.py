@@ -44,8 +44,7 @@ def lint(content, filepath=None):
 
     def error_collector(data):
         # Mutate the data since it was just generated
-        print data
-        data.line = data['line']
+        data.line = data.get('line')
         data.source = data['source']
         data.level = data['level']
         data.type = data['type']

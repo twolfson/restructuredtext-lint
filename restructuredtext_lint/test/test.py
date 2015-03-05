@@ -95,5 +95,5 @@ class TestRestructuredtextLint(TestCase):
         """
         filepath = __dir__ + '/test_files/invalid_link.rst'
         errors = restructuredtext_lint.lint_file(filepath)
-        print errors
+        print [error.line for error in errors]
         # self.assertIn('Title overline & underline mismatch', errors[0].message)
