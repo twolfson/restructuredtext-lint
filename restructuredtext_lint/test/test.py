@@ -1,6 +1,6 @@
 import os
-from unittest import TestCase
 
+import testtools
 import yaml
 
 import restructuredtext_lint
@@ -15,7 +15,7 @@ An invalid rst file
 """
 
 
-class TestRestructuredtextLint(TestCase):
+class TestRestructuredtextLint(testtools.TestCase):
     def _load_file(self, filepath):
         """Load a file into memory"""
         f = open(filepath)
