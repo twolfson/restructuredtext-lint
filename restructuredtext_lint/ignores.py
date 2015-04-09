@@ -61,12 +61,16 @@ def unregister_ignores(registered_directives, registered_roles):
 
 
 @contextlib.contextmanager
-def register_unregister_ignores(directives, roles):
+def register_unregister_ignores(directives=None, roles=None):
     """Register then unregister ignoreable sphinx directives & roles.
 
     :param list directives: directives to ignore
     :param list roles: roles to ignore
     """
+    if directives is None:
+        directives = []
+    if roles is None:
+        roles = []
     registered_directives, registered_roles = register_ignores(directives,
                                                                roles)
     try:

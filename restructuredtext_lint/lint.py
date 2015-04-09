@@ -85,23 +85,14 @@ def lint(content, filepath=None, custom_directives=None, custom_roles=None):
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    if custom_directives is None:
-        custom_directives = []
-    if custom_roles is None:
-        custom_roles = []
-    if custom_directives or custom_roles:
-        with ignores.register_unregister_ignores(custom_directives,
-                                                 custom_roles):
-            return _lint(content, filepath=filepath)
-    else:
+    with ignores.register_unregister_ignores(directives=custom_directives,
+                                             roles=custom_roles):
         return _lint(content, filepath=filepath)
 
 
-def lint_file(filepath, encoding=None,
-              custom_directives=None, custom_roles=None):
+def lint_file(filepath, encoding=None, **kwargs):
     """Lint a specific file"""
     f = io.open(filepath, encoding=encoding)
     content = f.read()
     f.close()
-    return lint(content, filepath=filepath,
-                custom_directives=custom_directives, custom_roles=custom_roles)
+    return lint(content, filepath=filepath, **kwargs)
