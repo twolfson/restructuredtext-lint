@@ -24,7 +24,7 @@ _base_sp_directives = ('autosummary', 'centered', 'currentmodule',
                        'toctree', 'todo', 'versionadded', 'versionchanged')
 
 
-def fetch_ignore_roles_directives():
+def fetch_roles_directives():
     """Extract all possible directives & roles that sphinx is aware of.
 
     Raises a ``RuntimeError`` if sphinx is not importable.
