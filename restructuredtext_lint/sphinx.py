@@ -138,7 +138,7 @@ def unregister_ignores(registered_directives, registered_roles):
 
 @contextlib.contextmanager
 def register_unregister_ignores(no_skip_directives=None, no_skip_roles=None):
-    """Register then unregister ignoreable sphinx directives & roles..
+    """Register then unregister ignoreable sphinx directives & roles.
 
     Does nothing if sphinx is not importable.
 
