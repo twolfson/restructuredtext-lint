@@ -50,7 +50,7 @@ def unregister_ignores(registered_directives, registered_roles):
     :param list registered_directives: directives to unregister
     :param list registered_roles: roles to unregister
     """
-    # TODO: this is a hack into the sphinx rst registries, there doesn't
+    # TODO: this is a hack into the docutils rst registries, there doesn't
     # appear to be any other way to get at these...
     all_directives = getattr(rst_directives, '_directives', {})
     for directive in registered_directives:
