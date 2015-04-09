@@ -6,11 +6,7 @@ try:
     # All currently know sphinx domains.
     #
     # See: https://github.com/sphinx-doc/sphinx/tree/1.3/sphinx/domains
-    from sphinx.domains import c as c_domain
-    from sphinx.domains import cpp as cpp_domain
-    from sphinx.domains import javascript as javascript_domain
-    from sphinx.domains import python as python_domain
-    from sphinx.domains import std as std_domain
+    from sphinx import domains
 
     SPHINX_AVAILABLE = True
 except ImportError:
@@ -40,26 +36,20 @@ def fetch_ignore_roles_directives():
                            ' at the initial load time but was unable'
                            ' to. Please verify `sphinx` is installed'
                            ' properly.')
+
     sp_directives = list(_base_sp_directives)
-    sp_directives.extend(std_domain.StandardDomain.directives)
     sp_roles = list(_base_sp_roles)
-    sp_roles.extend(std_domain.StandardDomain.roles)
 
-    for (domain, class_name) in [(c_domain, 'CDomain'),
-                                 (cpp_domain, 'CPPDomain'),
-                                 (javascript_domain, 'JavaScriptDomain'),
-                                 (python_domain, 'PythonDomain')]:
+    # Get all the domains directives and roles and insert them.
+    for domain_class in domains.BUILTIN_DOMAINS.values():
 
-        # Get all the domains directives and roles and insert them.
-        domain_class = getattr(domain, class_name)
         domain_directives = getattr(domain_class, 'directives', [])
         domain_roles = getattr(domain_class, 'roles', [])
-
-        sp_directives.extend(domain_directives)
 
         # Ensure that we also use the name prefixed version as well
         # for example :py:func: and :func: are equivalent and we need to make
         # sure we register both kinds.
+        sp_directives.extend(domain_directives)
         sp_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
                                                       item=item)
                              for item in domain_directives)
