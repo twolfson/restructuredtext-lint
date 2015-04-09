@@ -17,6 +17,10 @@ except ImportError:
     SPHINX_AVAILABLE = False
 
 # Default and/or base roles/directives to ignore.
+#
+# See: http://sphinx-doc.org/markup/para.html
+# And: http://sphinx-doc.org/markup/toctree.html#directive-toctree
+# And: https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/directives/other.py
 _base_sp_roles = ('ctype',)
 _base_sp_directives = ('autosummary', 'centered', 'currentmodule',
                        'deprecated', 'hlist', 'include', 'index',
