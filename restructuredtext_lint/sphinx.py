@@ -36,8 +36,8 @@ def fetch_ignore_roles_directives():
     :rtype dict: dict with 'directives' and 'roles' keys with list values.
     """
     if not SPHINX_AVAILABLE:
-        raise RuntimeError("Sphinx roles can not be fetched without"
-                           " sphinx being importable")
+        raise RuntimeError("Sphinx roles & directives can not be fetched"
+                           " without sphinx being importable")
     sp_directives = list(_base_sp_directives)
     sp_directives.extend(std_domain.StandardDomain.directives)
     sp_roles = list(_base_sp_roles)
