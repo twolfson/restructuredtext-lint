@@ -97,7 +97,7 @@ def _fetch_roles_directives(no_skip_directives=None, no_skip_roles=None):
 
 
 def register_ignores(no_skip_directives=None, no_skip_roles=None):
-    """Register ignoreable sphinx directives.
+    """Register ignoreable sphinx directives & roles..
 
     Does nothing if sphinx is not importable.
 
@@ -117,7 +117,7 @@ def register_ignores(no_skip_directives=None, no_skip_roles=None):
 
 
 def unregister_ignores(registered_directives, registered_roles):
-    """Unregister previously registered sphinx directives.
+    """Unregister previously registered sphinx directives & roles.
 
     Does nothing if sphinx is not importable.
 
@@ -138,7 +138,7 @@ def unregister_ignores(registered_directives, registered_roles):
 
 @contextlib.contextmanager
 def register_unregister_ignores(no_skip_directives=None, no_skip_roles=None):
-    """Register then unregister ignoreable sphinx directives.
+    """Register then unregister ignoreable sphinx directives & roles..
 
     Does nothing if sphinx is not importable.
 
