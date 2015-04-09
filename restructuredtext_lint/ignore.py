@@ -8,7 +8,7 @@ from docutils.parsers.rst import roles as rst_roles
 class _IgnoredDirective(rst.Directive):
     """Stub for unknown directives.
 
-    See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194
+    See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194  # noqa
 
     See: https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L217
     """
