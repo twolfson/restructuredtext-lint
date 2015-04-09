@@ -29,7 +29,7 @@ def _ignore_role(name, rawtext, text, lineno, inliner,
     return ([], [])
 
 
-def register_ignores(directives, roles):
+def register_custom_directives_roles(directives, roles):
     """Register ignoreable sphinx directives & roles.
 
     :param list directives: directives to ignore
@@ -41,28 +41,27 @@ def register_ignores(directives, roles):
         rst_directives.register_directive(directive, _IgnoredDirective)
     for role in roles:
         rst_roles.register_local_role(role, _ignore_role)
-    return (directives, roles)
 
 
-def unregister_ignores(registered_directives, registered_roles):
+def unregister_custom_directives_roles(directives, roles):
     """Unregister previously registered sphinx directives & roles.
 
-    :param list registered_directives: directives to unregister
-    :param list registered_roles: roles to unregister
+    :param list directives: directives to unregister
+    :param list roles: roles to unregister
     """
     # TODO: this is a hack into the docutils rst registries, there doesn't
     # appear to be any other way to get at these...
     all_directives = getattr(rst_directives, '_directives', {})
-    for directive in registered_directives:
+    for directive in directives:
         all_directives.pop(directive, None)
     all_roles = getattr(rst_roles, '_roles', {})
-    for role in registered_roles:
+    for role in roles:
         all_roles.pop(role, None)
 
 
 @contextlib.contextmanager
-def register_unregister_ignores(directives=None, roles=None):
-    """Register then unregister ignoreable sphinx directives & roles.
+def register_unregister_custom_directives_roles(directives=None, roles=None):
+    """Register then unregister sphinx directives & roles.
 
     :param list directives: directives to ignore
     :param list roles: roles to ignore
@@ -71,9 +70,8 @@ def register_unregister_ignores(directives=None, roles=None):
         directives = []
     if roles is None:
         roles = []
-    registered_directives, registered_roles = register_ignores(directives,
-                                                               roles)
+    register_custom_directives_roles(directives, roles)
     try:
         yield
     finally:
-        unregister_ignores(registered_directives, registered_roles)
+        unregister_custom_directives_roles(directives, roles)

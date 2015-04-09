@@ -36,8 +36,10 @@ def fetch_ignore_roles_directives():
     :rtype dict: dict with 'directives' and 'roles' keys with list values.
     """
     if not SPHINX_AVAILABLE:
-        raise RuntimeError("Sphinx roles & directives can not be fetched"
-                           " without sphinx being importable")
+        raise RuntimeError('`restructuredtext-lint` tried to `import sphinx`'
+                           ' at the initial load time but was unable'
+                           ' to. Please verify `sphinx` is installed'
+                           ' properly.')
     sp_directives = list(_base_sp_directives)
     sp_directives.extend(std_domain.StandardDomain.directives)
     sp_roles = list(_base_sp_roles)
@@ -58,11 +60,13 @@ def fetch_ignore_roles_directives():
         # Ensure that we also use the name prefixed version as well
         # for example :py:func: and :func: are equivalent and we need to make
         # sure we register both kinds.
-        sp_directives.extend('%s:%s' % (domain_class.name, item)
+        sp_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
+                                                      item=item)
                              for item in domain_directives)
 
         sp_roles.extend(domain_roles)
-        sp_roles.extend('%s:%s' % (domain_class.name, item)
+        sp_roles.extend('{domain}:{item}'.format(domain=domain_class.name,
+                                                 item=item)
                         for item in domain_roles)
 
     return {

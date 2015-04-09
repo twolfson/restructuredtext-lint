@@ -85,8 +85,8 @@ def lint(content, filepath=None, directives=None, roles=None):
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    with ignore.register_unregister_ignores(directives=directives,
-                                            roles=roles):
+    with ignore.register_unregister_custom_directives_roles(directives=directives,
+                                                            roles=roles):
         return _lint(content, filepath=filepath)
 
 
