@@ -41,7 +41,7 @@ def fetch_roles_directives():
     sp_roles = list(_base_sp_roles)
 
     # Get all the domains directives and roles and insert them.
-    for domain_class in domains.BUILTIN_DOMAINS.values():
+    for name, domain_class in domains.BUILTIN_DOMAINS.items():
 
         domain_directives = getattr(domain_class, 'directives', [])
         domain_roles = getattr(domain_class, 'roles', [])
@@ -50,14 +50,16 @@ def fetch_roles_directives():
         # for example :py:func: and :func: are equivalent and we need to make
         # sure we register both kinds.
         sp_directives.extend(domain_directives)
-        sp_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
-                                                      item=item)
-                             for item in domain_directives)
+        if name != 'std':
+            sp_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
+                                                          item=item)
+                                 for item in domain_directives)
 
         sp_roles.extend(domain_roles)
-        sp_roles.extend('{domain}:{item}'.format(domain=domain_class.name,
-                                                 item=item)
-                        for item in domain_roles)
+        if name != 'std':
+            sp_roles.extend('{domain}:{item}'.format(domain=domain_class.name,
+                                                     item=item)
+                            for item in domain_roles)
 
     return {
         'directives': sp_directives,
