@@ -3,7 +3,7 @@ from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
-from restructuredtext_lint import sphinx
+from restructuredtext_lint import ignores
 
 
 def _lint(content, filepath=None):
@@ -75,24 +75,33 @@ def _lint(content, filepath=None):
     return errors
 
 
-def lint(content, filepath=None, ignore_sphinx=True):
+def lint(content, filepath=None, custom_directives=None, custom_roles=None):
     """Lint reStructuredText and return errors
 
     :param string content: reStructuredText to be linted
     :param string filepath: Optional path to file, this will be returned as the source
+    :param list custom_directives: custom directives to ignore
+    :param list custom_roles: custom roles to ignore
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    if ignore_sphinx:
-        with sphinx.register_unregister_ignores():
+    if custom_directives is None:
+        custom_directives = []
+    if custom_roles is None:
+        custom_roles = []
+    if custom_directives or custom_roles:
+        with ignores.register_unregister_ignores(custom_directives,
+                                                 custom_roles):
             return _lint(content, filepath=filepath)
     else:
         return _lint(content, filepath=filepath)
 
 
-def lint_file(filepath, encoding=None, ignore_sphinx=True):
+def lint_file(filepath, encoding=None,
+              custom_directives=None, custom_roles=None):
     """Lint a specific file"""
     f = io.open(filepath, encoding=encoding)
     content = f.read()
     f.close()
-    return lint(content, filepath=filepath, ignore_sphinx=ignore_sphinx)
+    return lint(content, filepath=filepath,
+                custom_directives=custom_directives, custom_roles=custom_roles)

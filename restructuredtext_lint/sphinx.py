@@ -1,10 +1,11 @@
 from __future__ import absolute_import
 
-import contextlib
-
 try:
     import sphinx  # noqa
 
+    # All currently know sphinx domains.
+    #
+    # See: https://github.com/sphinx-doc/sphinx/tree/1.3/sphinx/domains
     from sphinx.domains import c as c_domain
     from sphinx.domains import cpp as cpp_domain
     from sphinx.domains import javascript as javascript_domain
@@ -15,44 +16,23 @@ try:
 except ImportError:
     SPHINX_AVAILABLE = False
 
-from docutils.parsers import rst
-from docutils.parsers.rst import directives as rst_directives
-from docutils.parsers.rst import roles as rst_roles
-
 # Default and/or base roles/directives to ignore.
-_base_sp_roles = tuple(['ctype'])
-_base_sp_directives = tuple(['autosummary',
-                             'centered', 'currentmodule', 'deprecated',
-                             'hlist', 'include', 'index',
-                             'literalinclude', 'no-code-block',
-                             'seealso', 'toctree', 'todo',
-                             'versionadded', 'versionchanged'])
+_base_sp_roles = ('ctype',)
+_base_sp_directives = ('autosummary', 'centered', 'currentmodule',
+                       'deprecated', 'hlist', 'include', 'index',
+                       'literalinclude', 'no-code-block', 'seealso',
+                       'toctree', 'todo', 'versionadded', 'versionchanged')
 
 
-class _IgnoredDirective(rst.Directive):
-    """Stub for unknown directives.
+def fetch_roles_directives():
+    """Extract all possible directives & roles that sphinx is aware of.
 
-    See: https://github.com/myint/rstcheck/blob/master/rstcheck.py#L305
+    Returns empty lists if sphinx is not importable.
+
+    :rtype (list, list): tuple of directives and roles.
     """
-    has_content = True
-
-    def run(self):
-        return []
-
-
-def _ignore_role(name, rawtext, text, lineno, inliner,
-                 options=None, content=None):
-    """Stub for unknown roles.
-
-    See: https://github.com/myint/rstcheck/blob/master/rstcheck.py#L316
-    """
-    return ([], [])
-
-
-def _fetch_roles_directives(no_skip_directives=None, no_skip_roles=None):
-    # Extract all possible directives & roles that sphinx is aware of for
-    # all known sphinx domains, and then remove the ones we do not want to
-    # skip (and return them).
+    if not SPHINX_AVAILABLE:
+        return ([], [])
     sp_directives = list(_base_sp_directives)
     sp_directives.extend(std_domain.StandardDomain.directives)
     sp_roles = list(_base_sp_roles)
@@ -80,75 +60,4 @@ def _fetch_roles_directives(no_skip_directives=None, no_skip_roles=None):
         sp_roles.extend('%s:%s' % (domain_class.name, item)
                         for item in domain_roles)
 
-    # Filter out the ones we desire to avoid skipping (if any)...
-    if not no_skip_directives:
-        no_skip_directives = []
-    if not no_skip_roles:
-        no_skip_roles = []
-    ok_directives = []
-    for directive in sp_directives:
-        if directive not in no_skip_directives:
-            ok_directives.append(directive)
-    ok_roles = []
-    for role in sp_roles:
-        if role not in no_skip_roles:
-            ok_roles.append(role)
-    return (ok_directives, ok_roles)
-
-
-def register_ignores(no_skip_directives=None, no_skip_roles=None):
-    """Register ignoreable sphinx directives & roles.
-
-    Does nothing if sphinx is not importable.
-
-    :param list/set no_skip_directives: directives to not skip
-    :param list/set no_skip_roles: roles to not skip
-    """
-    if not SPHINX_AVAILABLE:
-        return ([], [])
-    ok_directives, ok_roles = _fetch_roles_directives(
-        no_skip_directives=no_skip_directives,
-        no_skip_roles=no_skip_roles)
-    for directive in ok_directives:
-        rst_directives.register_directive(directive, _IgnoredDirective)
-    for role in ok_roles:
-        rst_roles.register_local_role(role, _ignore_role)
-    return (ok_directives, ok_roles)
-
-
-def unregister_ignores(registered_directives, registered_roles):
-    """Unregister previously registered sphinx directives & roles.
-
-    Does nothing if sphinx is not importable.
-
-    :param list/set registered_directives: directives to unregister
-    :param list/set registered_roles: roles to unregister
-    """
-    if not SPHINX_AVAILABLE:
-        return
-    # TODO: this is a hack into the sphinx rst registries, there doesn't
-    # appear to be any other way to get at these...
-    all_directives = getattr(rst_directives, '_directives', {})
-    for directive in registered_directives:
-        all_directives.pop(directive, None)
-    all_roles = getattr(rst_roles, '_roles', {})
-    for role in registered_roles:
-        all_roles.pop(role, None)
-
-
-@contextlib.contextmanager
-def register_unregister_ignores(no_skip_directives=None, no_skip_roles=None):
-    """Register then unregister ignoreable sphinx directives & roles.
-
-    Does nothing if sphinx is not importable.
-
-    :param list/set no_skip_directives: directives to not skip
-    :param list/set no_skip_roles: roles to not skip
-    """
-    registered_directives, registered_roles = register_ignores(
-        no_skip_directives=no_skip_directives,
-        no_skip_roles=no_skip_roles)
-    try:
-        yield
-    finally:
-        unregister_ignores(registered_directives, registered_roles)
+    return (sp_directives, sp_roles)
