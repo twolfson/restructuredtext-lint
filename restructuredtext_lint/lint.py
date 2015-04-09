@@ -75,18 +75,18 @@ def _lint(content, filepath=None):
     return errors
 
 
-def lint(content, filepath=None, custom_directives=None, custom_roles=None):
+def lint(content, filepath=None, directives=None, roles=None):
     """Lint reStructuredText and return errors
 
     :param string content: reStructuredText to be linted
     :param string filepath: Optional path to file, this will be returned as the source
-    :param list custom_directives: custom directives to ignore
-    :param list custom_roles: custom roles to ignore
+    :param list directives: custom directives to ignore
+    :param list roles: custom roles to ignore
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    with ignore.register_unregister_ignores(directives=custom_directives,
-                                            roles=custom_roles):
+    with ignore.register_unregister_ignores(directives=directives,
+                                            roles=roles):
         return _lint(content, filepath=filepath)
 
 

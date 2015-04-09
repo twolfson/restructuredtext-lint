@@ -28,15 +28,16 @@ _base_sp_directives = ('autosummary', 'centered', 'currentmodule',
                        'toctree', 'todo', 'versionadded', 'versionchanged')
 
 
-def fetch_roles_directives():
+def fetch_ignore_roles_directives():
     """Extract all possible directives & roles that sphinx is aware of.
 
-    Returns empty lists if sphinx is not importable.
+    Raises a ``RuntimeError`` if sphinx is not importable.
 
-    :rtype (list, list): tuple of directives and roles.
+    :rtype dict: dict with 'directives' and 'roles' keys with list values.
     """
     if not SPHINX_AVAILABLE:
-        return ([], [])
+        raise RuntimeError("Sphinx roles can not be fetched without"
+                           " sphinx being importable")
     sp_directives = list(_base_sp_directives)
     sp_directives.extend(std_domain.StandardDomain.directives)
     sp_roles = list(_base_sp_roles)
@@ -64,4 +65,7 @@ def fetch_roles_directives():
         sp_roles.extend('%s:%s' % (domain_class.name, item)
                         for item in domain_roles)
 
-    return (sp_directives, sp_roles)
+    return {
+        'directives': sp_directives,
+        'roles': sp_roles,
+    }
