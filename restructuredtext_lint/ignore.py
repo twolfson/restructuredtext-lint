@@ -6,7 +6,7 @@ from docutils.parsers.rst import roles as rst_roles
 
 
 class _IgnoredDirective(rst.Directive):
-    """Stub for unknown directives.
+    """Stub for ignored directives.
 
     See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194  # noqa
 
@@ -20,7 +20,7 @@ class _IgnoredDirective(rst.Directive):
 
 def _ignore_role(name, rawtext, text, lineno, inliner,
                  options=None, content=None):
-    """Stub for unknown roles.
+    """Stub for ignored roles.
 
     See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
 
