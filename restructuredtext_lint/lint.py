@@ -3,15 +3,10 @@ from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
+from restructuredtext_lint import sphinx
 
-def lint(content, filepath=None):
-    """Lint reStructuredText and return errors
 
-    :param string content: reStructuredText to be linted
-    :param string filepath: Optional path to file, this will be returned as the source
-    :rtype list: List of errors. Each error will contain a line, source (filepath),
-        message (error message), and full message (error message + source lines)
-    """
+def _lint(content, filepath=None):
     # Generate a new parser (copying `rst2html.py` flow)
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/tools/rst2html.py
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l348
@@ -80,9 +75,24 @@ def lint(content, filepath=None):
     return errors
 
 
-def lint_file(filepath, encoding=None):
+def lint(content, filepath=None, ignore_sphinx=True):
+    """Lint reStructuredText and return errors
+
+    :param string content: reStructuredText to be linted
+    :param string filepath: Optional path to file, this will be returned as the source
+    :rtype list: List of errors. Each error will contain a line, source (filepath),
+        message (error message), and full message (error message + source lines)
+    """
+    if ignore_sphinx:
+        with sphinx.register_unregister_ignores():
+            return _lint(content, filepath=filepath)
+    else:
+        return _lint(content, filepath=filepath)
+
+
+def lint_file(filepath, encoding=None, ignore_sphinx=True):
     """Lint a specific file"""
     f = io.open(filepath, encoding=encoding)
     content = f.read()
     f.close()
-    return lint(content, filepath)
+    return lint(content, filepath=filepath, ignore_sphinx=ignore_sphinx)
