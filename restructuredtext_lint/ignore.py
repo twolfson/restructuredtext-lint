@@ -5,22 +5,27 @@ from docutils.parsers.rst import directives as rst_directives
 from docutils.parsers.rst import roles as rst_roles
 
 
-class _IgnoredDirective(rst.Directive):
-    """Stub for ignored directives.
+class EmptyDirective(rst.Directive):
+    """Stub for empty directives.
 
     See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194  # noqa
 
     See: https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L217
     """
+    # Allow the directive to have content
+    # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l304  # noqa
     has_content = True
 
+    # Do nothing when the directive is run
+    # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l319  # noqa
+    # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/body.py#l33  # noqa
     def run(self):
         return []
 
 
-def _ignore_role(name, rawtext, text, lineno, inliner,
-                 options=None, content=None):
-    """Stub for ignored roles.
+def empty_role(name, rawtext, text, lineno, inliner,
+               options=None, content=None):
+    """Stub for empty roles.
 
     See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
 
@@ -29,28 +34,28 @@ def _ignore_role(name, rawtext, text, lineno, inliner,
     return ([], [])
 
 
-def register_custom_directives_roles(directives, roles):
-    """Register ignoreable sphinx directives & roles.
+def register_directives_roles(directives, roles):
+    """Register ignoreable sphinx directives and roles.
 
     :param list directives: directives to ignore
     :param list roles: roles to ignore
 
     :rtype (list, list): tuple of directives and roles.
     """
+    # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     for directive in directives:
-        rst_directives.register_directive(directive, _IgnoredDirective)
+        rst_directives.register_directive(directive, EmptyDirective)
     for role in roles:
-        rst_roles.register_local_role(role, _ignore_role)
+        rst_roles.register_local_role(role, empty_role)
 
 
-def unregister_custom_directives_roles(directives, roles):
-    """Unregister previously registered sphinx directives & roles.
+def unregister_directives_roles(directives, roles):
+    """Unregister previously registered sphinx directives and roles.
 
     :param list directives: directives to unregister
     :param list roles: roles to unregister
     """
-    # TODO: this is a hack into the docutils rst registries, there doesn't
-    # appear to be any other way to get at these...
+    # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l73  # noqa
     all_directives = getattr(rst_directives, '_directives', {})
     for directive in directives:
         all_directives.pop(directive, None)
@@ -60,8 +65,11 @@ def unregister_custom_directives_roles(directives, roles):
 
 
 @contextlib.contextmanager
-def register_unregister_custom_directives_roles(directives=None, roles=None):
-    """Register then unregister sphinx directives & roles.
+def directives_roles(directives=None, roles=None):
+    """Register then unregister sphinx directives and roles.
+
+        with directives_roles(sphinx_directives, sphinx_roles):
+            _lint('file.py')
 
     :param list directives: directives to ignore
     :param list roles: roles to ignore
@@ -70,8 +78,8 @@ def register_unregister_custom_directives_roles(directives=None, roles=None):
         directives = []
     if roles is None:
         roles = []
-    register_custom_directives_roles(directives, roles)
+    register_directives_roles(directives, roles)
     try:
         yield
     finally:
-        unregister_custom_directives_roles(directives, roles)
+        unregister_directives_roles(directives, roles)
