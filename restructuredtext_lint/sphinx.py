@@ -102,8 +102,5 @@ def get_empty_directives_roles():
             {'name': directive_name, 'directive': EmptyDirective}
             for directive_name in get_directive_names()
         ],
-        'roles': [
-            {'name': role_name, 'role': EmptyRole(role_name)}
-            for role_name in get_role_names()
-        ],
+        'roles': [EmptyRole(role_name) for role_name in get_role_names()],
     }
