@@ -1,3 +1,4 @@
+# Load in our dependencies
 import contextlib
 
 from docutils.parsers import rst
@@ -5,6 +6,7 @@ from docutils.parsers.rst import directives as rst_directives
 from docutils.parsers.rst import roles as rst_roles
 
 
+# Define our utilities
 class EmptyDirective(rst.Directive):
     """Stub for empty directives.
 
