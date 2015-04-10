@@ -1,4 +1,6 @@
 # Load in our dependencies
+from .utils import EmptyDirective, get_empty_role
+
 BUILTIN_DOMAINS = None
 try:
     # Import all known sphinx domains
@@ -6,8 +8,6 @@ try:
     from sphinx.domains import BUILTIN_DOMAINS
 except ImportError:
     pass
-
-from .utils import EmptyDirective, get_empty_role
 
 
 # Define our constants
@@ -85,6 +85,7 @@ def get_roles_names():
 
     # Return our list of roles
     return sphinx_roles
+
 
 def get_empty_directives_roles():
     """Helper to retrieve empty directives and roles for Sphinx
