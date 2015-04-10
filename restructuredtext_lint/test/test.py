@@ -105,6 +105,5 @@ class TestRestructuredtextLint(TestCase):
         https://github.com/twolfson/restructuredtext-lint/issues/11
         """
         filepath = __dir__ + '/test_files/sphinx.rst'
-        get_empty_directives_roles()
-        errors = restructuredtext_lint.lint_file(filepath)
+        errors = restructuredtext_lint.lint_file(filepath, **get_empty_directives_roles())
         self.assertEqual(errors, [])

@@ -7,13 +7,10 @@ from docutils.parsers.rst import roles as rst_roles
 
 
 # Define our utilities
+# http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194  # noqa
+# https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L217
 class EmptyDirective(rst.Directive):
-    """Stub for empty directives.
-
-    See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l194  # noqa
-
-    See: https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L217
-    """
+    """Stub for empty directives."""
     # Allow the directive to have content
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/__init__.py#l304  # noqa
     has_content = True
@@ -25,13 +22,11 @@ class EmptyDirective(rst.Directive):
         return []
 
 
+# http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
+# http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l184
+# https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L228
 def get_empty_role(name, rawtext, text, lineno, inliner, options=None, content=None):
-    """Stub for empty roles.
-
-    See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
-
-    See: https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L228
-    """
+    """Stub for empty roles"""
     return ([], [])
 
 
@@ -46,8 +41,10 @@ def register_directives_roles(directives, roles):
     # TODO: Do we need to generate dictionaries for each directive or can we distill its name from the object?
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     for directive in directives:
-        rst_directives.register_directive(directive['name'], directive['directive'])
+        # register_directive(name, directive)
+        rst_directives.register_directive(**directive)
     for role in roles:
+        # register_directive(name, directive)
         rst_roles.register_local_role(role['name'], role['role'])
 
 
