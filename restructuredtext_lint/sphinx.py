@@ -60,7 +60,7 @@ def get_directive_names():
     return sphinx_directives
 
 
-def get_roles_names():
+def get_role_names():
     """Retrieve existing all possible directive names from Sphinx
 
     Raises a ``RuntimeError`` if sphinx is not importable.
@@ -92,6 +92,13 @@ def get_empty_directives_roles():
 
     :rtype dict: Container for empty directives/roles `{directives, roles}`
     """
-    EmptyDirective()
-    get_empty_role()
-    pass
+    return {
+        'directives': [
+            {'name': directive_name, 'directive': EmptyDirective}
+            for directive_name in get_directive_names()
+        ],
+        'roles': [
+            {'name': role_name, 'role': get_empty_role()}
+            for role_name in get_role_names()
+        ],
+    }
