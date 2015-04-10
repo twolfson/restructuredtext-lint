@@ -78,9 +78,11 @@ def get_role_names():
         domain_roles = getattr(domain_class, 'roles', [])
 
         # Ensure that we also use the name prefixed version as well
-        # for example :py:func: and :func: are equivalent and we need to make
+        # for example `:py:func:` and `:func:` are equivalent and we need to make
         # sure we register both kinds.
         sphinx_roles.extend(domain_roles)
+        for item in domain_roles:
+            print domain_class.name, item
         if name != 'std':
             sphinx_roles.extend('{domain}:{item}'.format(domain=domain_class.name,
                                                          item=item)
