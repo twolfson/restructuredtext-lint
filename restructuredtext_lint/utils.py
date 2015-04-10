@@ -35,12 +35,18 @@ class EmptyRole(object, rst_roles.GenericRole):
 
 
 def register_directives_roles(directives, roles):
-    """Register ignoreable sphinx directives and roles.
+    """Register custom directives and roles for reStructuredText
 
-    :param list directives: directives to ignore
-    :param list roles: roles to ignore
-
-    :rtype (list, list): tuple of directives and roles.
+    :param list directives: Custom directives to bind to reStructuredText
+    :param dict directives[*]: Container for directive name/class
+    :param str directives[*]['name']: Name to refer to directive by (e.g. `py:function`)
+    :param class directives[*]['directive']: Class corresponding to directive
+        This should line up with signature expected by `docutils`
+    :param list roles: Custom roles to bind to reStructuredText
+    :param dict roles[*]: Container for role name/function
+    :param str roles[*]['name']: Name to refer to role by (e.g. `py:func`)
+    :param class roles[*]['role_fn']: Function corresponding to role
+        This should line up with signature expected by `docutils`
     """
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     for directive in directives:
@@ -49,14 +55,13 @@ def register_directives_roles(directives, roles):
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l146
     for role in roles:
         # register_local_role(name, role_fn)
-        rst_roles.register_local_role(role['name'], role['role'])
+        rst_roles.register_local_role(role['name'], role['role_fn'])
 
 
 def unregister_directives_roles(directives, roles):
-    """Unregister previously registered sphinx directives and roles.
+    """Unregister directives and roles from reStructuredText
 
-    :param list directives: directives to unregister
-    :param list roles: roles to unregister
+    Function signature is the same as `register_directives_roles`
     """
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l73  # noqa
     all_directives = getattr(rst_directives, '_directives', {})
@@ -74,8 +79,7 @@ def use_directives_roles(directives=None, roles=None):
         with using_directives_roles(sphinx_directives, sphinx_roles):
             _lint('file.py')
 
-    :param list directives: directives to ignore
-    :param list roles: roles to ignore
+    Function signature is the same as `register_directives_roles`
     """
     if directives is None:
         directives = []
