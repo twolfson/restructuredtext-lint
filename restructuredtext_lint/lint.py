@@ -3,7 +3,7 @@ from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
-from restructuredtext_lint import ignore
+from .ignore import register_unregister_custom_directives_roles
 
 
 def _lint(content, filepath=None):
@@ -85,8 +85,8 @@ def lint(content, filepath=None, directives=None, roles=None):
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
-    with ignore.register_unregister_custom_directives_roles(directives=directives,
-                                                            roles=roles):
+    with register_unregister_custom_directives_roles(directives=directives,
+                                                     roles=roles):
         return _lint(content, filepath=filepath)
 
 
