@@ -1,5 +1,4 @@
-from __future__ import absolute_import
-
+# Load in our dependencies
 BUILTIN_DOMAINS = None
 try:
     # Import all known sphinx domains
@@ -8,7 +7,8 @@ try:
 except ImportError:
     pass
 
-# Default/base roles and directives for Sphinx
+# Define our constants
+#   Default/base roles and directives for Sphinx
 # See: http://sphinx-doc.org/markup/para.html
 # And: http://sphinx-doc.org/markup/toctree.html#directive-toctree
 # And: https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/directives/other.py
