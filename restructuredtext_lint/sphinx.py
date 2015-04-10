@@ -1,4 +1,7 @@
 # Load in our dependencies
+# DEV: Use `absolute_import` to remove confusion about where `sphinx` comes from
+from __future__ import absolute_import
+
 from .utils import EmptyDirective, get_empty_role
 
 BUILTIN_DOMAINS = None
@@ -98,7 +101,7 @@ def get_empty_directives_roles():
             for directive_name in get_directive_names()
         ],
         'roles': [
-            {'name': role_name, 'role': get_empty_role()}
+            {'name': role_name, 'role': get_empty_role}
             for role_name in get_role_names()
         ],
     }

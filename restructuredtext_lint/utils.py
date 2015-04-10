@@ -48,7 +48,7 @@ def register_directives_roles(directives, roles):
     for directive in directives:
         rst_directives.register_directive(directive['name'], directive['directive'])
     for role in roles:
-        rst_roles.register_local_role(role['name'], directive['role'])
+        rst_roles.register_local_role(role['name'], role['role'])
 
 
 def unregister_directives_roles(directives, roles):
@@ -60,10 +60,10 @@ def unregister_directives_roles(directives, roles):
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l73  # noqa
     all_directives = getattr(rst_directives, '_directives', {})
     for directive in directives:
-        all_directives.pop(directive, None)
+        all_directives.pop(directive['name'], None)
     all_roles = getattr(rst_roles, '_roles', {})
     for role in roles:
-        all_roles.pop(role, None)
+        all_roles.pop(role['name'], None)
 
 
 @contextlib.contextmanager
