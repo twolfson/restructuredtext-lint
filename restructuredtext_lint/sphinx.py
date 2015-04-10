@@ -17,9 +17,9 @@ except ImportError:
 
 BASE_SPHINX_ROLES = ('ctype',)
 BASE_SPHINX_DIRECTIVES = ('autosummary', 'centered', 'currentmodule',
-                           'deprecated', 'hlist', 'include', 'index',
-                           'literalinclude', 'no-code-block', 'seealso',
-                           'toctree', 'todo', 'versionadded', 'versionchanged')
+                          'deprecated', 'hlist', 'include', 'index',
+                          'literalinclude', 'no-code-block', 'seealso',
+                          'toctree', 'todo', 'versionadded', 'versionchanged')
 
 
 def get_sphinx_domains():
