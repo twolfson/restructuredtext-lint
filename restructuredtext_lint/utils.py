@@ -34,7 +34,7 @@ class EmptyRole(object, rst_roles.GenericRole):
         self.role_name = role_name
 
 
-def register_directives_roles(directives, roles):
+def register_directives_roles(directives=None, roles=None):
     """Register custom directives and roles for reStructuredText
 
     :param list directives: Custom directives to bind to reStructuredText
@@ -49,31 +49,35 @@ def register_directives_roles(directives, roles):
         This should line up with signature expected by `docutils`
     """
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
-    for directive in directives:
-        # register_directive(name, directive)
-        rst_directives.register_directive(directive['name'], directive['directive'])
+    if directives:
+        for directive in directives:
+            # register_directive(name, directive)
+            rst_directives.register_directive(directive['name'], directive['directive'])
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l146
-    for role in roles:
-        # register_local_role(name, role_fn)
-        rst_roles.register_local_role(role['name'], role['role_fn'])
+    if roles:
+        for role in roles:
+            # register_local_role(name, role_fn)
+            rst_roles.register_local_role(role['name'], role['role_fn'])
 
 
-def unregister_directives_roles(directives, roles):
+def unregister_directives_roles(directives=None, roles=None):
     """Unregister directives and roles from reStructuredText
 
     Function signature is the same as `register_directives_roles`
     """
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l73  # noqa
-    all_directives = getattr(rst_directives, '_directives', {})
-    for directive in directives:
-        all_directives.pop(directive['name'], None)
-    all_roles = getattr(rst_roles, '_roles', {})
-    for role in roles:
-        all_roles.pop(role['name'], None)
+    if directives:
+        registered_directives = getattr(rst_directives, '_directives', {})
+        for directive in directives:
+            registered_directives.pop(directive['name'], None)
+    if roles:
+        registered_roles = getattr(rst_roles, '_roles', {})
+        for role in roles:
+            registered_roles.pop(role['name'], None)
 
 
 @contextlib.contextmanager
-def use_directives_roles(directives=None, roles=None):
+def use_directives_roles(*args, **kwargs):
     """Register then unregister sphinx directives and roles.
 
         with using_directives_roles(sphinx_directives, sphinx_roles):
@@ -81,12 +85,8 @@ def use_directives_roles(directives=None, roles=None):
 
     Function signature is the same as `register_directives_roles`
     """
-    if directives is None:
-        directives = []
-    if roles is None:
-        roles = []
-    register_directives_roles(directives, roles)
+    register_directives_roles(*args, **kwargs)
     try:
         yield
     finally:
-        unregister_directives_roles(directives, roles)
+        unregister_directives_roles(*args, **kwargs)
