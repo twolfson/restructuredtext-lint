@@ -25,9 +25,13 @@ class EmptyDirective(rst.Directive):
 # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
 # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l184
 # https://github.com/myint/rstcheck/blob/v1.1.1/rstcheck.py#L228
-def get_empty_role(name, rawtext, text, lineno, inliner, options=None, content=None):
+class EmptyRole(object, rst_roles.GenericRole):
     """Stub for empty roles"""
-    return ([], [])
+    def node_class(*args, **kwargs):
+        return None
+
+    def __init__(self, role_name):
+        self.role_name = role_name
 
 
 def register_directives_roles(directives, roles):

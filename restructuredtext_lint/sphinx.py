@@ -2,7 +2,7 @@
 # DEV: Use `absolute_import` to remove confusion about where `sphinx` comes from
 from __future__ import absolute_import
 
-from .utils import EmptyDirective, get_empty_role
+from .utils import EmptyDirective, EmptyRole
 
 BUILTIN_DOMAINS = None
 try:
@@ -103,7 +103,7 @@ def get_empty_directives_roles():
             for directive_name in get_directive_names()
         ],
         'roles': [
-            {'name': role_name, 'role': get_empty_role}
+            {'name': role_name, 'role': EmptyRole(role_name)}
             for role_name in get_role_names()
         ],
     }
