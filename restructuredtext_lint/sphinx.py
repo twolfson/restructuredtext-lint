@@ -7,6 +7,9 @@ try:
 except ImportError:
     pass
 
+from .utils import EmptyDirective, get_empty_role
+
+
 # Define our constants
 #   Default/base roles and directives for Sphinx
 # See: http://sphinx-doc.org/markup/para.html
@@ -31,17 +34,15 @@ def get_sphinx_domains():
     return BUILTIN_DOMAINS
 
 
-def fetch_directive_names():
+def get_directive_names():
     """Retrieve existing all possible directive names from Sphinx
 
     Raises a ``RuntimeError`` if sphinx is not importable.
 
     :rtype list: List of names for `directives` within Sphinx
     """
-    # Copy our roles to build them out as lists
+    # Get all the domains directives and roles and insert them on a copy
     sphinx_directives = list(BASE_SPHINX_DIRECTIVES)
-
-    # Get all the domains directives and roles and insert them
     sphinx_domains = get_sphinx_domains()
     for name, domain_class in sphinx_domains.items():
         domain_directives = getattr(domain_class, 'directives', [])
@@ -54,28 +55,42 @@ def fetch_directive_names():
             sphinx_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
                                                               item=item)
                                      for item in domain_directives)
+
     # Return our list of directives
     return sphinx_directives
 
 
-def fetch_roles_names():
+def get_roles_names():
     """Retrieve existing all possible directive names from Sphinx
 
     Raises a ``RuntimeError`` if sphinx is not importable.
 
     :rtype list: List of names for `roles` within Sphinx
     """
-    sphinx_roles = list(BASE_SPHINX_ROLES)
 
-    # Get all the domains directives and roles and insert them.
+    # Get all the domains directives and roles and insert them on a copy
+    sphinx_roles = list(BASE_SPHINX_ROLES)
     sphinx_domains = get_sphinx_domains()
     for name, domain_class in sphinx_domains.items():
         domain_roles = getattr(domain_class, 'roles', [])
 
+        # Ensure that we also use the name prefixed version as well
+        # for example :py:func: and :func: are equivalent and we need to make
+        # sure we register both kinds.
         sphinx_roles.extend(domain_roles)
         if name != 'std':
             sphinx_roles.extend('{domain}:{item}'.format(domain=domain_class.name,
                                                          item=item)
                                 for item in domain_roles)
 
+    # Return our list of roles
     return sphinx_roles
+
+def get_empty_directives_roles():
+    """Helper to retrieve empty directives and roles for Sphinx
+
+    :rtype dict: Container for empty directives/roles `{directives, roles}`
+    """
+    EmptyDirective()
+    get_empty_role()
+    pass

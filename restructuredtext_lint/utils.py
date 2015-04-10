@@ -25,8 +25,7 @@ class EmptyDirective(rst.Directive):
         return []
 
 
-def empty_role(name, rawtext, text, lineno, inliner,
-               options=None, content=None):
+def get_empty_role(name, rawtext, text, lineno, inliner, options=None, content=None):
     """Stub for empty roles.
 
     See: http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py
@@ -44,11 +43,12 @@ def register_directives_roles(directives, roles):
 
     :rtype (list, list): tuple of directives and roles.
     """
+    # TODO: Do we need to generate dictionaries for each directive or can we distill its name from the object?
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     for directive in directives:
-        rst_directives.register_directive(directive, EmptyDirective)
+        rst_directives.register_directive(directive['name'], directive['directive'])
     for role in roles:
-        rst_roles.register_local_role(role, empty_role)
+        rst_roles.register_local_role(role['name'], directive['role'])
 
 
 def unregister_directives_roles(directives, roles):
