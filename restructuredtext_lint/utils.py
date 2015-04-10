@@ -67,10 +67,10 @@ def unregister_directives_roles(directives, roles):
 
 
 @contextlib.contextmanager
-def directives_roles(directives=None, roles=None):
+def use_directives_roles(directives=None, roles=None):
     """Register then unregister sphinx directives and roles.
 
-        with directives_roles(sphinx_directives, sphinx_roles):
+        with using_directives_roles(sphinx_directives, sphinx_roles):
             _lint('file.py')
 
     :param list directives: directives to ignore
