@@ -21,6 +21,7 @@ BASE_SPHINX_DIRECTIVES = ('autosummary', 'centered', 'currentmodule',
                            'literalinclude', 'no-code-block', 'seealso',
                            'toctree', 'todo', 'versionadded', 'versionchanged')
 
+
 def get_sphinx_domains():
     """Helper to retrieve domains from Sphinx"""
     if BUILTIN_DOMAINS is None:
@@ -30,26 +31,20 @@ def get_sphinx_domains():
     return BUILTIN_DOMAINS
 
 
-def fetch_role_names():
-    """Retrieve existing all possible role names from Sphinx"""
-    PASS
-
-def fetch_roles_directives():
-    """Extract all possible directives and roles that sphinx is aware of.
+def fetch_directive_names():
+    """Retrieve existing all possible directive names from Sphinx
 
     Raises a ``RuntimeError`` if sphinx is not importable.
 
-    :rtype dict: dict with 'directives' and 'roles' keys with list values.
+    :rtype list: List of names for `directives` within Sphinx
     """
     # Copy our roles to build them out as lists
     sphinx_directives = list(BASE_SPHINX_DIRECTIVES)
-    sphinx_roles = list(BASE_SPHINX_ROLES)
 
-    # Get all the domains directives and roles and insert them.
+    # Get all the domains directives and roles and insert them
     sphinx_domains = get_sphinx_domains()
     for name, domain_class in sphinx_domains.items():
         domain_directives = getattr(domain_class, 'directives', [])
-        domain_roles = getattr(domain_class, 'roles', [])
 
         # Ensure that we also use the name prefixed version as well
         # for example :py:func: and :func: are equivalent and we need to make
@@ -59,6 +54,23 @@ def fetch_roles_directives():
             sphinx_directives.extend('{domain}:{item}'.format(domain=domain_class.name,
                                                               item=item)
                                      for item in domain_directives)
+    # Return our list of directives
+    return sphinx_directives
+
+
+def fetch_roles_names():
+    """Retrieve existing all possible directive names from Sphinx
+
+    Raises a ``RuntimeError`` if sphinx is not importable.
+
+    :rtype list: List of names for `roles` within Sphinx
+    """
+    sphinx_roles = list(BASE_SPHINX_ROLES)
+
+    # Get all the domains directives and roles and insert them.
+    sphinx_domains = get_sphinx_domains()
+    for name, domain_class in sphinx_domains.items():
+        domain_roles = getattr(domain_class, 'roles', [])
 
         sphinx_roles.extend(domain_roles)
         if name != 'std':
@@ -66,7 +78,4 @@ def fetch_roles_directives():
                                                          item=item)
                                 for item in domain_roles)
 
-    return {
-        'directives': sphinx_directives,
-        'roles': sphinx_roles,
-    }
+    return sphinx_roles
