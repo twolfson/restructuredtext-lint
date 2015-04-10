@@ -42,7 +42,6 @@ def register_directives_roles(directives, roles):
 
     :rtype (list, list): tuple of directives and roles.
     """
-    # TODO: Do we need to generate dictionaries for each directive or can we distill its name from the object?
     # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     for directive in directives:
         # register_directive(name, directive)
