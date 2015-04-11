@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.11.2 - Added test failures for lint errors
+
 0.11.1 - Fixed bad assertions in tests
 
 0.11.0 - Added fix for errors that have no line number (e.g. invalid links). Fixes #12
