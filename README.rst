@@ -94,6 +94,32 @@ Lint a `reStructuredText`_ file and return errors
 
 Returns: Same structure as ``restructuredtext_lint.lint``
 
+Extension
+---------
+Under the hood, we leverage `docutils`_ for parsing reStructuredText documents. `docutils`_ supports adding new directives and roles via ``register_directive`` and ``register_role``. Here is an example of adding a directive from `sphinx`_.
+
+.. _`sphinx`: http://sphinx-doc.org/
+
+https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/directives/code.py
+
+**sphinx.rst**
+
+.. code:: rst
+
+    Hello
+    =====
+    World
+
+    .. highlight:: python
+
+        Hello World!
+
+**sphinx.py**
+
+.. code:: python
+
+    # Import restructuredtext_lint
+
 Examples
 --------
 Here is an example of all invalid properties
