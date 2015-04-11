@@ -28,6 +28,7 @@ def get_builtin_domains():
 
     # Otherwise, import Sphinx's builtin domains
     #   https://github.com/sphinx-doc/sphinx/tree/1.3/sphinx/domains
+    # DEV: We lazy load this to avoid loading Sphinx directives prematurely
     from sphinx.domains import BUILTIN_DOMAINS
     memo_map['_BUILTIN_DOMAINS'] = BUILTIN_DOMAINS
     return memo_map['_BUILTIN_DOMAINS']
@@ -39,7 +40,12 @@ def register_builtin_domain(key):
     :param str key: Name of builtin domain (e.g. `c`, `cpp`, `py`)
         https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/domains/__init__.py#L285-L292
     """
-    pass
+    # https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/domains/python.py#L582-L622
+    domain = get_builtin_domains()[key]
+    domain_name = domain.name
+    for directive_name in domain.directives:
+        # TODO: Import in docutils `register_directive` and use that
+        pass
     # # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/directives/__init__.py#l134  # noqa
     # if directives:
     #     for directive in directives:
