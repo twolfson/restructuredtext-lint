@@ -2,14 +2,8 @@
 # DEV: Use `absolute_import` to remove confusion about where `sphinx` comes from
 from __future__ import absolute_import
 
-BUILTIN_DOMAINS = None
-try:
-    # Import all known sphinx domains
-    #   https://github.com/sphinx-doc/sphinx/tree/1.3/sphinx/domains
-    from sphinx.domains import BUILTIN_DOMAINS
-except ImportError:
-    pass
-
+# Define placeholder for memoization
+memo_map = {}
 
 # Define our constants
 #   Default/base roles and directives for Sphinx
@@ -28,11 +22,15 @@ BASE_SPHINX_DIRECTIVES = ('autosummary', 'centered', 'currentmodule',
 
 def get_builtin_domains():
     """Helper to retrieve domains from Sphinx"""
-    if BUILTIN_DOMAINS is None:
-        raise RuntimeError('`restructuredtext-lint` tried to import `BUILTIN_DOMAINS` from `sphinx.domains` '
-                           '(`from sphinx.domains import BUILTIN_DOMAINS`) at the initial load time but was unable to.'
-                           'Please verify `sphinx` is installed properly.')
-    return BUILTIN_DOMAINS
+    # Attempt to load memoized BUILTIN_DOMAINS
+    if memo_map.get('_BUILTIN_DOMAINS') is not None:
+        return memo_map['_BUILTIN_DOMAINS']
+
+    # Otherwise, import Sphinx's builtin domains
+    #   https://github.com/sphinx-doc/sphinx/tree/1.3/sphinx/domains
+    from sphinx.domains import BUILTIN_DOMAINS
+    memo_map['_BUILTIN_DOMAINS'] = BUILTIN_DOMAINS
+    return memo_map['_BUILTIN_DOMAINS']
 
 
 def register_builtin_domain(key):
@@ -47,7 +45,7 @@ def register_builtin_domain(key):
     #     for directive in directives:
     #         # register_directive(name, directive)
     #         rst_directives.register_directive(directive['name'], directive['directive'])
-    # # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l146
+    # # http://repo.or.cz/w/docutils.git/blob/1976ba91eff979abc3e13e5d8cb68324833af6a0:/docutils/parsers/rst/roles.py#l146  # noqa
     # if roles:
     #     for role in roles:
     #         # register_local_role(name, role_fn)
@@ -56,4 +54,5 @@ def register_builtin_domain(key):
 
 def register_builtin_domains():
     """Register all Sphinx builtin domains to `docutils`"""
-    pass
+    for key in get_builtin_domains():
+        register_builtin_domain(key)

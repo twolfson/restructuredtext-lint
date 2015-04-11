@@ -4,9 +4,12 @@ from unittest import TestCase
 import yaml
 
 import restructuredtext_lint
-from restructuredtext_lint.sphinx import get_empty_directives_roles
+# TODO: Load this in a CLI based set of tests
+from restructuredtext_lint.sphinx import register_builtin_domains
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
+
+register_builtin_domains()
 
 """
 # TODO: Implement this as a class (options) with a sugar function that lints a string against a set of options
@@ -105,13 +108,11 @@ class TestRestructuredtextLint(TestCase):
         https://github.com/twolfson/restructuredtext-lint/issues/11
         """
         filepath = __dir__ + '/test_files/sphinx.rst'
-        from sphinx.directives.code import Highlight  # noqa
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertEqual(errors, [])
 
     def test_invalid_sphinx(self):
         """An invalid document with Sphinx directives/roles when Sphinx is loaded recognizes errors"""
         filepath = __dir__ + '/test_files/invalid_sphinx.rst'
-        from sphinx.directives.code import Highlight  # noqa
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('no content permitted', errors[0].message)
