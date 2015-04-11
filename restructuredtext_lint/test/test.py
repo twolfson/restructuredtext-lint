@@ -4,6 +4,7 @@ from unittest import TestCase
 import yaml
 
 import restructuredtext_lint
+from restructuredtext_lint.sphinx import get_empty_directives_roles
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 
