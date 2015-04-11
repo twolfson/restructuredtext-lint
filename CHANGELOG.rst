@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.11.3 - Documented added in new directives/roles
+
 0.11.2 - Added test failures for lint errors
 
 0.11.1 - Fixed bad assertions in tests
