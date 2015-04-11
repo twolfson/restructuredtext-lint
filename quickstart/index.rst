@@ -20,3 +20,9 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. highlight:: python
+
+
+.. py:function:: Output Hello World!
+
+  print('Hello World!')
