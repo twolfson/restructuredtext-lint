@@ -99,11 +99,18 @@ class TestRestructuredtextLint(TestCase):
         self.assertIn('Hyperlink target "hello" is not referenced.', errors[1].message)
 
     def test_sphinx(self):
-        """A document with Sphinx directives/roles ignores them when requested to
+        """A document with Sphinx directives/roles recognizes them when Sphinx is loaded
 
         https://github.com/twolfson/restructuredtext-lint/issues/11
         """
         filepath = __dir__ + '/test_files/sphinx.rst'
-        from sphinx.python import PythonDomain
+        from sphinx.directives.code import Highlight  # noqa
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertEqual(errors, [])
+
+    def test_invalid_sphinx(self):
+        """An invalid document with Sphinx directives/roles when Sphinx is loaded recognizes errors"""
+        filepath = __dir__ + '/test_files/invalid_sphinx.rst'
+        from sphinx.directives.code import Highlight  # noqa
+        errors = restructuredtext_lint.lint_file(filepath)
+        self.assertIn('no content permitted', errors[0].message)
