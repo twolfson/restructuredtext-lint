@@ -38,6 +38,7 @@ def lint(content, filepath=None):
     # TODO: Find a more proper way to do this
     # TODO: We might exit the program if a certain error level is reached
     document.reporter.stream = None
+    document.settings.env = None
 
     # Collect errors via an observer
     errors = []
