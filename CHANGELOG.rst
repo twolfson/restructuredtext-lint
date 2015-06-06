@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+Unreleased - Added possibility to pass one or many .rst files to `rst-lint` command.
+
 0.11.3 - Documented added in new directives/roles
 
 0.11.2 - Added test failures for lint errors

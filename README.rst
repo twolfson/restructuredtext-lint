@@ -38,9 +38,9 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
 .. code:: bash
 
     $ rst-lint --help
-    usage: rst-lint [-h] [--format FORMAT] [--encoding ENCODING] filepath
+    usage: rst-lint [-h] [--format FORMAT] [--encoding ENCODING] filepath [filepath ...]
 
-    Lint a reStructuredText file
+    Lint reStructuredText files
 
     positional arguments:
       filepath         File to lint

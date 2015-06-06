@@ -2,46 +2,55 @@ import argparse
 import json
 import sys
 
-from .lint import lint_file
+from lint import lint_file
 
 
-def _main(filepath, format='text', stream=sys.stdout, encoding=None):
-    # Read and lint the file
-    errors = lint_file(filepath, encoding=encoding)
+def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
+    error_dicts = []
+    error_occurred = False
 
-    # If there were no errors, exit gracefully
-    if not errors:
-        if format == 'json':
-            stream.write('[]')
+    for filepath in filepaths:
+        # Read and lint the file
+        file_errors = lint_file(filepath, encoding=encoding)
+
+        if not file_errors:
+            stream.write('INFO File {filepath} is clean.\n'.format(filepath=filepath))
         else:
-            stream.write('File was clean.\n')
-        sys.exit(0)
+            error_occurred = True
+            if format == 'text':
+                for err in file_errors:
+                    # e.g. WARNING readme.rst:12 Title underline too short.
+                    stream.write('{err.type} {err.source}:{err.line} {err.message}\n'.format(err=err))
+            elif format == 'json':
+                error_dicts.extend({
+                    'line': error.line,
+                    'source': error.source,
+                    'level': error.level,
+                    'type': error.type,
+                    'message': error.message,
+                    'full_message': error.full_message,
+                } for error in file_errors)
 
-    # Otherwise, output the errors and exit angrily
     if format == 'json':
-        error_dicts = [{
-            'line': error.line,
-            'source': error.source,
-            'level': error.level,
-            'type': error.type,
-            'message': error.message,
-            'full_message': error.full_message,
-        } for error in errors]
         stream.write(json.dumps(error_dicts))
+
+    if error_occurred:
+        sys.exit(1)
     else:
-        for error in errors:
-            # WARNING readme.rst:12 Title underline too short.
-            stream.write('%s %s:%s %s\n' % (error.type, error.source, error.line, error.message))
-    sys.exit(1)
+        sys.exit(0)
 
 
 def main():
     # Set up options and parse arguments
-    parser = argparse.ArgumentParser(description='Lint a reStructuredText file')
-    parser.add_argument('filepath', type=str, help='File to lint')
-    parser.add_argument('--format', type=str, help='Format of output (e.g. text, json)')
+    parser = argparse.ArgumentParser(description='Lint reStructuredText files')
+    parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
+    parser.add_argument('--format', default='text', type=str, help='Format of the output (e.g. text, json)')
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
     args = parser.parse_args()
 
     # Run the main argument
     _main(**args.__dict__)
+
+
+if __name__ == '__main__':
+    main()
