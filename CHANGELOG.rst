@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.12.1 - Added ``flake8-quotes`` to lint for non-single quotes
+
 0.12.0 - Added support for multiple ``.rst`` files to ``rst-lint`` command via @pwilczynskiclearcode in #19
 
 0.11.3 - Documented added in new directives/roles
