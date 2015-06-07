@@ -109,11 +109,13 @@ class TestRestructuredtextLintCLI(TestCase):
     def test_rst_lint_filepaths_not_given(self):
         """The `rst-lint` command is available and prints error if no filepath was given."""
         with self.assertRaises(subprocess.CalledProcessError):
+            # python ../cli.py
             output = subprocess.check_output((sys.executable, rst_lint_path), stderr=subprocess.STDOUT)
             self.assertIn('too few arguments', output)
 
     def test_rst_lint_correct_file(self):
         """The `rst-lint` command prints out 'X is clean' if rst file is correct."""
+        # python ../cli.py test_files/valid.rst
         raw_output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst))
         output = str(raw_output).splitlines()
         self.assertIn('{filepath} is clean'.format(filepath=valid_rst), output[0])
@@ -122,6 +124,7 @@ class TestRestructuredtextLintCLI(TestCase):
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
         with self.assertRaises(subprocess.CalledProcessError) as e:
+            # python ../cli.py test_files/valid.rst invalid.rst
             subprocess.check_output((sys.executable, rst_lint_path, valid_rst, invalid_rst))
         output = str(e.exception.output)
         # 'rst-lint' should exit with error code 1:
