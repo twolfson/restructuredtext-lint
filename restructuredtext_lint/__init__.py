@@ -1,4 +1,4 @@
 # Export lint functions
-from .lint import lint, lint_file
+from restructuredtext_lint.lint import lint, lint_file
 lint = lint
 lint_file = lint_file

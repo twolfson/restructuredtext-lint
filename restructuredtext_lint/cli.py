@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 
-from lint import lint_file
+from restructuredtext_lint.lint import lint_file
 
 
 def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
