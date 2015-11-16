@@ -2,3 +2,4 @@
 build/
 dist/
 restructuredtext_lint.egg-info
+node_modules/
