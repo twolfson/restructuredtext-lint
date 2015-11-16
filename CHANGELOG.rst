@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.12.3 - Added `foundry` for release
+
 0.12.2 - Repaired imports to be absolute within package to fix Python3 issues via @fizyk in #21
 
 0.12.1 - Added ``flake8-quotes`` to lint for non-single quotes
