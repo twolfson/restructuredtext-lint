@@ -16,7 +16,8 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
         file_errors = lint_file(filepath, encoding=encoding)
 
         if not file_errors:
-            stream.write('INFO File {filepath} is clean.\n'.format(filepath=filepath))
+            if format == 'text':
+                stream.write('INFO File {filepath} is clean.\n'.format(filepath=filepath))
         else:
             error_occurred = True
             if format == 'text':
