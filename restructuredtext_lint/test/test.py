@@ -1,3 +1,5 @@
+# Load in our dependencies
+from __future__ import absolute_import
 import os
 import subprocess
 import sys

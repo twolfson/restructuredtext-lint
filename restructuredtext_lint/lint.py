@@ -1,3 +1,5 @@
+# Load in our dependencies
+from __future__ import absolute_import
 import io
 from docutils import utils
 from docutils.core import Publisher
