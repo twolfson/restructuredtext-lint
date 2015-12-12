@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.13.0 - Added absolute imports to repair local development
+
 0.12.4 - Added CPython@3.4, CPython@3.5, and PyPy@3 to Travis CI tests
 
 0.12.3 - Added `foundry` for release
