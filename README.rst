@@ -57,10 +57,11 @@ PyPI issues
 ^^^^^^^^^^^
 While a document may lint cleanly locally, there can be issues when submitted it to `PyPI`_. Here are some common problems:
 
-- Usage of non-builtin lexers (e.g. ``bibtex``) will pass locally but not be recognized/parsable on `PyPI`_ since they aren't installed
+- Usage of non-builtin lexers (e.g. ``bibtex``) will pass locally but not be recognized/parsable on `PyPI`_
 
+  - This is due to `PyPI`_ not having a non-builtin lexer installed
   - Please avoid non-builtin lexers to avoid complications
-  - For more information, please see `#27`_
+  - For more information, see `#27`_
 
 - Relative hyperlinks will not work (e.g. ``./UNLICENSE``)
 
