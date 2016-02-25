@@ -53,6 +53,25 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
 
+PyPI issues
+^^^^^^^^^^^
+While a document may lint cleanly locally, there can be issues when submitted it to `PyPI`_. Here are some common problems:
+
+- Usage of non-builtin lexers (e.g. ``bibtex``) will pass locally but not be recognized/parsable on `PyPI`_ since they aren't installed
+
+  - Please avoid non-builtin lexers to avoid complications
+  - For more information, please see `#27`_
+
+- Relative hyperlinks will not work (e.g. ``./UNLICENSE``)
+
+  - According to Stack Overflow, hyperlinks must use a scheme (e.g. ``http``, ``https``) and that scheme must be whitelisted
+
+    - http://stackoverflow.com/a/16594755
+
+  - Please use absolute hyperlinks (e.g. ``https://github.com/twolfson/restructuredtext-lint/blob/master/UNLICENSE``)
+
+.. _`#27`: https://github.com/twolfson/restructuredtext-lint/issues/27
+
 Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` and ``lint_file`` function
