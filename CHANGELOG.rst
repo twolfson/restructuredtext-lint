@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.14.2 - Documented common PyPI issues
+
 0.14.1 - Fixed up indentation annoyances in README
 
 0.14.0 - Repaired JSON with no errors via @Iyozhikov in #25
