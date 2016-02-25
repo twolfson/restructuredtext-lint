@@ -67,17 +67,25 @@ Lint `reStructuredText`_ and return errors
 Returns:
 
 - errors ``List`` - List of errors
-    - Each error is a class from `docutils`_ with the following attrs
-        - line ``Integer|None`` - Line where the error occurred
-            - On rare occasions, this will be ``None`` (e.g. anonymous link mismatch)
-        - source ``String`` - ``filepath`` provided in parameters
-        - level ``Integer`` - Level of the warning
-            - Levels represent 'info': 1, 'warning': 2, 'error': 3, 'severe': 4
-        - type ``String`` - Noun describing the error level
-            - Levels can be 'INFO', 'WARNING', 'ERROR', or 'SEVERE'
-        - message ``String`` - Error message
-        - full_message ``String`` - Error message and source lines where the error occurred
-    - It should be noted that ``level``, ``type``, ``message``, and ``full_message`` are custom attrs added onto the original ``system_message``
+
+  - Each error is a class from `docutils`_ with the following attrs
+
+    - line ``Integer|None`` - Line where the error occurred
+
+      - On rare occasions, this will be ``None`` (e.g. anonymous link mismatch)
+
+    - source ``String`` - ``filepath`` provided in parameters
+    - level ``Integer`` - Level of the warning
+
+      - Levels represent 'info': 1, 'warning': 2, 'error': 3, 'severe': 4
+
+    - type ``String`` - Noun describing the error level
+
+      - Levels can be 'INFO', 'WARNING', 'ERROR', or 'SEVERE'
+    - message ``String`` - Error message
+    - full_message ``String`` - Error message and source lines where the error occurred
+
+  - It should be noted that ``level``, ``type``, ``message``, and ``full_message`` are custom attrs added onto the original ``system_message``
 
 .. _`docutils`: http://docutils.sourceforge.net/
 
@@ -87,8 +95,9 @@ Lint a `reStructuredText`_ file and return errors
 
 - filepath ``String`` - Path to file for linting
 - encoding ``String`` - Encoding to read file in as
-    - When ``None`` is provided, it will use OS default as provided by `locale.getpreferredencoding`_
-    - The list of supported encodings can be found at http://docs.python.org/2/library/codecs.html#standard-encodings
+
+  - When ``None`` is provided, it will use OS default as provided by `locale.getpreferredencoding`_
+  - The list of supported encodings can be found at http://docs.python.org/2/library/codecs.html#standard-encodings
 
 .. _`locale.getpreferredencoding`: http://docs.python.org/2/library/locale.html#locale.getpreferredencoding
 
