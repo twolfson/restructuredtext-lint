@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.14.3 - Moved `with` statement for opening/closing files to prevent leaking file descriptors via @asottile in #28
+
 0.14.2 - Documented common PyPI issues
 
 0.14.1 - Fixed up indentation annoyances in README
