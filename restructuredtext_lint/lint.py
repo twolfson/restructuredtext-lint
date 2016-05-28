@@ -84,7 +84,6 @@ def lint(content, filepath=None):
 
 def lint_file(filepath, encoding=None):
     """Lint a specific file"""
-    f = io.open(filepath, encoding=encoding)
-    content = f.read()
-    f.close()
+    with io.open(filepath, encoding=encoding) as f:
+        content = f.read()
     return lint(content, filepath)
