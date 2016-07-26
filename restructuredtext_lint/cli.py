@@ -4,6 +4,7 @@ import argparse
 import json
 import sys
 
+from restructuredtext_lint import __version__
 from restructuredtext_lint.lint import lint_file
 
 
@@ -46,6 +47,8 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
 def main():
     # Set up options and parse arguments
     parser = argparse.ArgumentParser(description='Lint reStructuredText files')
+    parser.add_argument('-v', '--version', action='version',
+                        version='Lint reStructuredText v%s' % __version__)
     parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
     parser.add_argument('--format', default='text', type=str, help='Format of the output (e.g. text, json)')
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
