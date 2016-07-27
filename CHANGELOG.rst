@@ -1,6 +1,8 @@
 restructuredtext-lint changelog
 ===============================
-0.14.3 - Moved `with` statement for opening/closing files to prevent leaking file descriptors via @asottile in #28
+0.15.0 - Added support for ``--version``
+
+0.14.3 - Moved ``with`` statement for opening/closing files to prevent leaking file descriptors via @asottile in #28
 
 0.14.2 - Documented common PyPI issues
 
@@ -12,7 +14,7 @@ restructuredtext-lint changelog
 
 0.12.4 - Added CPython@3.4, CPython@3.5, and PyPy@3 to Travis CI tests
 
-0.12.3 - Added `foundry` for release
+0.12.3 - Added ``foundry`` for release
 
 0.12.2 - Repaired imports to be absolute within package to fix Python3 issues via @fizyk in #21
 
