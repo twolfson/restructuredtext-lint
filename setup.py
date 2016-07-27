@@ -1,9 +1,12 @@
 from setuptools import setup, find_packages
 
+with open('restructuredtext_lint/VERSION') as version_file:
+    VERSION = version_file.read()
+
 
 setup(
     name='restructuredtext_lint',
-    version='0.14.3',
+    version=VERSION,
     description='reStructuredText linter',
     long_description=open('README.rst').read(),
     keywords=[
