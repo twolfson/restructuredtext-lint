@@ -2,12 +2,13 @@
 from __future__ import absolute_import
 import argparse
 import json
+import os
 import sys
 
 from restructuredtext_lint.lint import lint_file
 
 # Load in VERSION from standalone file
-with open('restructuredtext_lint/VERSION') as version_file:
+with open(os.path.join(os.path.dirname(__file__), 'VERSION'), 'r') as version_file:
     VERSION = version_file.read().strip()
 
 
