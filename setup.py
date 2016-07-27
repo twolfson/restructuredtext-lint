@@ -1,9 +1,11 @@
+# Load in our dependencies
 from setuptools import setup, find_packages
 
+# Load in VERSION from standalone file to avoid loading library
 with open('restructuredtext_lint/VERSION') as version_file:
     VERSION = version_file.read().strip()
 
-
+# Declare our library
 setup(
     name='restructuredtext_lint',
     version=VERSION,
