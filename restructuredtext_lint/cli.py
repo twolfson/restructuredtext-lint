@@ -6,6 +6,10 @@ import sys
 
 from restructuredtext_lint.lint import lint_file
 
+# Load in VERSION from standalone file
+with open('restructuredtext_lint/VERSION') as version_file:
+    VERSION = version_file.read().strip()
+
 
 def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
     error_dicts = []
@@ -46,6 +50,7 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None):
 def main():
     # Set up options and parse arguments
     parser = argparse.ArgumentParser(description='Lint reStructuredText files')
+    parser.add_argument('--version', action='version', version=VERSION)
     parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
     parser.add_argument('--format', default='text', type=str, help='Format of the output (e.g. text, json)')
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
