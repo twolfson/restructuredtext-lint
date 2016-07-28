@@ -31,6 +31,8 @@ setup(
     },
     packages=find_packages(),
     license='UNLICENSE',
+    # DEV: Include files like `VERSION` in our package
+    include_package_data=True,
     install_requires=open('requirements.txt').readlines(),
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
