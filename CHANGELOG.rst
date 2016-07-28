@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.16.0 - Reverted support for ``--version`` due to breaking installation from PyPI
+
 0.15.0 - Added support for ``--version``
 
 0.14.3 - Moved ``with`` statement for opening/closing files to prevent leaking file descriptors via @asottile in #28
