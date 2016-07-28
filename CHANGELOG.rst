@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.17.0 - Added back ``--version`` support with missing ``include_package_data`` flag
+
 0.16.0 - Reverted support for ``--version`` due to breaking installation from PyPI
 
 0.15.0 - Added support for ``--version``
