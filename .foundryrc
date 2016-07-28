@@ -1,5 +1,9 @@
 {
   "releaseCommands": [
+    {
+      "type": "customCommand",
+      "updateFiles": "echo \"$FOUNDRY_VERSION\" > restructuredtext_lint/VERSION"
+    },
     "foundry-release-git",
     "foundry-release-pypi"
   ]

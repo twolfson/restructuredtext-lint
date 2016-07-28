@@ -1,9 +1,15 @@
+# Load in our dependencies
+import os
 from setuptools import setup, find_packages
 
+# Load in VERSION from standalone file to avoid loading library
+with open(os.path.join(os.path.dirname(__file__), 'restructuredtext_lint', 'VERSION'), 'r') as version_file:
+    VERSION = version_file.read().strip()
 
+# Declare our library
 setup(
     name='restructuredtext_lint',
-    version='0.16.0',
+    version=VERSION,
     description='reStructuredText linter',
     long_description=open('README.rst').read(),
     keywords=[
