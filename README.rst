@@ -128,9 +128,15 @@ Returns: Same structure as ``restructuredtext_lint.lint``
 
 Extension
 ---------
-Under the hood, we leverage `docutils`_ for parsing reStructuredText documents. `docutils`_ supports adding new directives and roles via ``register_directive`` and ``register_role``. Here is an example of adding a directive from `sphinx`_.
+Under the hood, we leverage `docutils`_ for parsing reStructuredText documents. `docutils`_ supports adding new directives and roles via ``register_directive`` and ``register_role``.
 
-.. _`sphinx`: http://sphinx-doc.org/
+Sphinx
+^^^^^^
+Unfortunately due to customizations in `Sphinx's parser`_ we cannot include all of its directives/roles (see `#29`_). However, we can include some of them as one-offs. Here is an example of adding a directive from `Sphinx`_.
+
+.. _`Sphinx`: http://sphinx-doc.org/
+.. _`Sphinx's parser`:  Sphinx_
+.. _`#29`: https://github.com/twolfson/restructuredtext-lint/issues/29#issuecomment-243456787
 
 https://github.com/sphinx-doc/sphinx/blob/1.3/sphinx/directives/code.py
 
