@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.17.1 - Updated documentation with new info on Sphinx from #29
+
 0.17.0 - Added back ``--version`` support with missing ``include_package_data`` flag
 
 0.16.0 - Reverted support for ``--version`` due to breaking installation from PyPI
