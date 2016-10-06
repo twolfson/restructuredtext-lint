@@ -41,5 +41,6 @@ setup(
         'License :: Public Domain',
         'Operating System :: OS Independent',
         'Topic :: Text Processing :: Markup'
-    ]
+    ],
+    zip_safe=False
 )
