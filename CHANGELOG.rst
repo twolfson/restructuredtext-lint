@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.17.2 - Added `zip_safe` flag via @djanderson in #35
+
 0.17.1 - Updated documentation with new info on Sphinx from #29
 
 0.17.0 - Added back ``--version`` support with missing ``include_package_data`` flag
