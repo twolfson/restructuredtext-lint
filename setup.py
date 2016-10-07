@@ -33,6 +33,8 @@ setup(
     license='UNLICENSE',
     # DEV: Include files like `VERSION` in our package
     include_package_data=True,
+    # DEV: Mark our package as not zip safe so we can load `VERSION` on install
+    zip_safe=False,
     install_requires=open('requirements.txt').readlines(),
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
