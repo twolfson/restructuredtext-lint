@@ -12,7 +12,7 @@ with open(os.path.join(os.path.dirname(__file__), 'VERSION'), 'r') as version_fi
     VERSION = version_file.read().strip()
 
 
-def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=0):
+def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=0, fail=0):
     error_dicts = []
     error_occurred = False
 
@@ -24,7 +24,9 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=0):
             if format == 'text':
                 stream.write('INFO File {filepath} is clean.\n'.format(filepath=filepath))
         else:
-            error_occurred = True
+            for error in file_errors:
+                if error.level >= fail:
+                    error_occurred = True
             if format == 'text':
                 for error in file_errors:
                     if error.level >= level:
@@ -60,6 +62,9 @@ def main():
     parser.add_argument('--level', default=1, type=int, choices=(1, 2, 3, 4),
                         help='Minimum docutils linting error level to report '
                         '(integer, 1=info [default], 2=warning, 3=error, 4=severe)')
+    parser.add_argument('--fail', default=2, type=int, choices=(1, 2, 3, 4),
+                        help='Minimum docutils linting error level to consider as failing '
+                        '(integer, 1=info, 2=warning [default], 3=error, 4=severe)')
     args = parser.parse_args()
 
     # Run the main argument
