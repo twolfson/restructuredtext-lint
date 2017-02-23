@@ -44,14 +44,15 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=0):
         stream.write(json.dumps(error_dicts))
 
     if error_occurred:
-        sys.exit(1)
+        sys.exit(2)  # Using 2 for linting failure, 1 for internal error
     else:
-        sys.exit(0)
+        sys.exit(0)  # Success!
 
 
 def main():
     # Set up options and parse arguments
-    parser = argparse.ArgumentParser(description='Lint reStructuredText files')
+    parser = argparse.ArgumentParser(description='Lint reStructuredText files. Returns 0 if all files pass linting, '
+                                     '1 for an internal error, and 2 if linting failed.')
     parser.add_argument('--version', action='version', version=VERSION)
     parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
     parser.add_argument('--format', default='text', type=str, help='Format of the output (e.g. text, json)')

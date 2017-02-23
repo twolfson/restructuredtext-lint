@@ -129,8 +129,8 @@ class TestRestructuredtextLintCLI(TestCase):
             # python ../cli.py test_files/valid.rst invalid.rst
             subprocess.check_output((sys.executable, rst_lint_path, valid_rst, invalid_rst))
         output = str(e.exception.output)
-        # 'rst-lint' should exit with error code 1:
-        self.assertEqual(e.exception.returncode, 1)
+        # 'rst-lint' should exit with error code 2 as linting failed:
+        self.assertEqual(e.exception.returncode, 2)
         # There should be a least one valid .rst file:
         self.assertIn('is clean', output)
         # There should be a least one invalid rst file:
@@ -145,7 +145,16 @@ class TestRestructuredtextLintCLI(TestCase):
                 subprocess.check_output((sys.executable, rst_lint_path, '--level', str(level), warning_rst),
                                         universal_newlines=True)
             output = str(e.exception.output)
-            # 'rst-lint' should exit with error code 1:
-            self.assertEqual(e.exception.returncode, 1)
+            # 'rst-lint' should exit with error code 2 as linting failed:
+            self.assertEqual(e.exception.returncode, 2)
             self.assertEqual(count, output.count('\n'), output)
             self.assertEqual(count, output.count('WARNING'), output)
+
+    def test_bad_level(self):
+        """Confirm return code 1 from bad --level argument"""
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            # Want to hide the error message from the test output
+            subprocess.check_output((sys.executable, rst_lint_path, '--level', '5', warning_rst),
+                                    stderr=subprocess.DEVNULL)
+            # 'rst-lint' should exit with error code 1 as bad argument:
+            self.assertEqual(e.exception.returncode, 1)
