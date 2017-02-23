@@ -136,20 +136,6 @@ class TestRestructuredtextLintCLI(TestCase):
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
 
-    def test_report_levels(self):
-        """A document which triggers linting warnings, to test --level argument"""
-        # Expect to get either two lines (both warnings), or no lines of output
-        for level, count in ((1, 2), (2, 2), (3, 0), (4, 0)):
-            with self.assertRaises(subprocess.CalledProcessError) as e:
-                # Note we want to ensure stdout is a string (not bytes)
-                subprocess.check_output((sys.executable, rst_lint_path, '--level', str(level), warning_rst),
-                                        universal_newlines=True)
-            output = str(e.exception.output)
-            # 'rst-lint' should exit with error code 2 as linting failed:
-            self.assertEqual(e.exception.returncode, 2)
-            self.assertEqual(count, output.count('\n'), output)
-            self.assertEqual(count, output.count('WARNING'), output)
-
     def test_bad_level(self):
         """Confirm return code 1 from bad --level argument"""
         with self.assertRaises(subprocess.CalledProcessError) as e:
@@ -159,20 +145,21 @@ class TestRestructuredtextLintCLI(TestCase):
             # 'rst-lint' should exit with error code 1 as bad argument:
             self.assertEqual(e.exception.returncode, 1)
 
-    def test_fail_level(self):
-        """Confirm --fail threshold works using file with warnings only"""
-        for level, failure in ((1, True), (2, True), (3, False), (4, False)):
-            # Would use subprocess.run but unavailable on Python 2
-            process = subprocess.Popen((sys.executable, rst_lint_path, '--fail', str(level), warning_rst),
-                                       universal_newlines=True,
-                                       stdout=subprocess.PIPE,
-                                       stderr=subprocess.DEVNULL)
-            output, stderr = process.communicate()
-            self.assertEqual(2, output.count('\n'), output)
-            self.assertEqual(2, output.count('WARNING'), output)
-            if failure:
-                # The expected 2 warnings should be treated as failing
-                self.assertEqual(process.returncode, 2)
-            else:
-                # The expected 2 warnings should be treated as passing
-                self.assertEqual(process.returncode, 0)
+    def test_fail_low(self):
+        """Confirm low --level threshold fails file with warnings only"""
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            subprocess.check_output((sys.executable, rst_lint_path, '--level', '2', warning_rst),
+                                    universal_newlines=True)
+        output = str(e.exception.output)
+        self.assertEqual(2, output.count('\n'), output)
+        self.assertEqual(2, output.count('WARNING'), output)
+        # The expected 2 warnings should be treated as failing
+        self.assertEqual(e.exception.returncode, 2)
+
+    def test_level_high(self):
+        """Confirm high --level threshold accepts file with warnings only"""
+        # Should not see the 2 warnings, and expect return code zero
+        output = subprocess.check_output((sys.executable, rst_lint_path, '--level', '3', warning_rst),
+                                         universal_newlines=True)
+        self.assertEqual(1, output.count('\n'), output)
+        self.assertEqual(1, output.count('is clean'), output)
