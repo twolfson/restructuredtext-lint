@@ -136,15 +136,6 @@ class TestRestructuredtextLintCLI(TestCase):
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
 
-    def test_bad_level(self):
-        """Confirm return code 1 from bad --level argument"""
-        with self.assertRaises(subprocess.CalledProcessError) as e:
-            # Want to hide the error message from the test output
-            subprocess.check_output((sys.executable, rst_lint_path, '--level', '5', warning_rst),
-                                    stderr=subprocess.DEVNULL)
-            # 'rst-lint' should exit with error code 1 as bad argument:
-            self.assertEqual(e.exception.returncode, 1)
-
     def test_fail_low(self):
         """Confirm low --level threshold fails file with warnings only"""
         with self.assertRaises(subprocess.CalledProcessError) as e:
