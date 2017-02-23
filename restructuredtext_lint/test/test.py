@@ -12,6 +12,7 @@ import restructuredtext_lint
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 valid_rst = os.path.join(__dir__, 'test_files', 'valid.rst')
+warning_rst = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
 invalid_rst = os.path.join(__dir__, 'test_files', 'invalid.rst')
 rst_lint_path = os.path.join(__dir__, os.pardir, 'cli.py')
 
@@ -71,10 +72,9 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/5
         """
-        filepath = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
-        errors = restructuredtext_lint.lint_file(filepath)
+        errors = restructuredtext_lint.lint_file(warning_rst)
         self.assertEqual(errors[0].line, 6)
-        self.assertEqual(errors[0].source, filepath)
+        self.assertEqual(errors[0].source, warning_rst)
 
     def test_invalid_target(self):
         """A document with an invalid target name raises an error
@@ -135,3 +135,17 @@ class TestRestructuredtextLintCLI(TestCase):
         self.assertIn('is clean', output)
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
+
+    def test_report_levels(self):
+        """A document which triggers linting warnings, to test --level argument"""
+        # Expect to get either two lines (both warnings), or no lines of output
+        for level, count in ((1, 2), (2, 2), (3, 0), (4, 0)):
+            with self.assertRaises(subprocess.CalledProcessError) as e:
+                # Note we want to ensure stdout is a string (not bytes)
+                subprocess.check_output((sys.executable, rst_lint_path, '--level', str(level), warning_rst),
+                                        universal_newlines=True)
+            output = str(e.exception.output)
+            # 'rst-lint' should exit with error code 1:
+            self.assertEqual(e.exception.returncode, 1)
+            self.assertEqual(count, output.count('\n'), output)
+            self.assertEqual(count, output.count('WARNING'), output)
