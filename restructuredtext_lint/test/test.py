@@ -75,7 +75,7 @@ class TestRestructuredtextLint(TestCase):
         filepath = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertEqual(errors[0].line, 6)
-        self.assertEqual(errors[0].source, warning_rst)
+        self.assertEqual(errors[0].source, filepath)
 
     def test_invalid_target(self):
         """A document with an invalid target name raises an error
