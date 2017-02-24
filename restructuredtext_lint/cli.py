@@ -27,7 +27,7 @@ with open(os.path.join(os.path.dirname(__file__), 'VERSION'), 'r') as version_fi
     VERSION = version_file.read().strip()
 
 
-def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=2):
+def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=LEVEL_MAP.get('warning')):
     error_dicts = []
     error_occurred = False
 
@@ -74,7 +74,7 @@ def main():
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
     parser.add_argument('--level', default='warning', type=str, choices=LEVEL_MAP,
                         help='Minimum docutils linting error level to report and consider as failing '
-                        '(lower case string, default is warning)')
+                        '(lower case string, default is "warning")')
     args = parser.parse_args()
 
     # Want the level strings to appear in the --help text via choices, so convert now:
