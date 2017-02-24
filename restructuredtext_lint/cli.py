@@ -12,7 +12,7 @@ with open(os.path.join(os.path.dirname(__file__), 'VERSION'), 'r') as version_fi
     VERSION = version_file.read().strip()
 
 
-def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=0):
+def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=2):
     error_dicts = []
     error_occurred = False
 
