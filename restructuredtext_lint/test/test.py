@@ -137,8 +137,13 @@ class TestRestructuredtextLintCLI(TestCase):
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
 
-    def test_fail_low(self):
+    def test_level_fail(self):
         """Confirm low --level threshold fails file with warnings only"""
+        # This is the expected behaviour we are checking:
+        # $ rst-lint --level 2 second_short_heading.rst ; echo "Return code $?"
+        # WARNING second_short_heading.rst:6 Title underline too short.
+        # WARNING second_short_heading.rst:6 Title underline too short.
+        # Return code 2
         with self.assertRaises(subprocess.CalledProcessError) as e:
             subprocess.check_output((sys.executable, rst_lint_path, '--level', '2', warning_rst),
                                     universal_newlines=True)
@@ -150,7 +155,10 @@ class TestRestructuredtextLintCLI(TestCase):
 
     def test_level_high(self):
         """Confirm high --level threshold accepts file with warnings only"""
-        # Should not see the 2 warnings, and expect return code zero
+        # This is the expected behaviour we are checking:
+        # $ rst-lint --level 3 second_short_heading.rst ; echo "Return code $?"
+        # INFO File second_short_heading.rst is clean.
+        # Return code 0
         output = subprocess.check_output((sys.executable, rst_lint_path, '--level', '3', warning_rst),
                                          universal_newlines=True)
         self.assertEqual(1, output.count('\n'), output)
