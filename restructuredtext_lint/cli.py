@@ -5,7 +5,22 @@ import json
 import os
 import sys
 
+from collections import OrderedDict
+
+from docutils.utils import Reporter
+
 from restructuredtext_lint.lint import lint_file
+
+# Generate our levels mapping for humans, using ordered dict for --help string
+# http://repo.or.cz/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/utils/__init__.py#l65
+LEVEL_MAP = OrderedDict([
+    ('debug', Reporter.DEBUG_LEVEL),  # 0
+    ('info', Reporter.INFO_LEVEL),  # 1
+    ('warning', Reporter.WARNING_LEVEL),  # 2
+    ('error', Reporter.ERROR_LEVEL),  # 3
+    ('severe', Reporter.SEVERE_LEVEL),  # 4
+])
+
 
 # Load in VERSION from standalone file
 with open(os.path.join(os.path.dirname(__file__), 'VERSION'), 'r') as version_file:
@@ -57,10 +72,13 @@ def main():
     parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
     parser.add_argument('--format', default='text', type=str, help='Format of the output (e.g. text, json)')
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. utf-8)')
-    parser.add_argument('--level', default=2, type=int, choices=(1, 2, 3, 4),
+    parser.add_argument('--level', default='warning', type=str, choices=LEVEL_MAP,
                         help='Minimum docutils linting error level to report and consider as failing '
-                        '(integer, 1=info, 2=warning [default], 3=error, 4=severe)')
+                        '(lower case string, default is warning)')
     args = parser.parse_args()
+
+    # Want the level strings to appear in the --help text via choices, so convert now:
+    args.level = LEVEL_MAP[args.level]
 
     # Run the main argument
     _main(**args.__dict__)
