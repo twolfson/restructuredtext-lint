@@ -47,13 +47,13 @@ def _main(filepaths, format='text', stream=sys.stdout, encoding=None, level=LEVE
                     stream.write('{err.type} {err.source}:{err.line} {err.message}\n'.format(err=err))
             elif format == 'json':
                 error_dicts.extend({
-                    'line': err.line,
-                    'source': err.source,
-                    'level': err.level,
-                    'type': err.type,
-                    'message': err.message,
-                    'full_message': err.full_message,
-                } for err in file_errors)
+                    'line': error.line,
+                    'source': error.source,
+                    'level': error.level,
+                    'type': error.type,
+                    'message': error.message,
+                    'full_message': error.full_message,
+                } for error in file_errors)
 
     if format == 'json':
         stream.write(json.dumps(error_dicts))
