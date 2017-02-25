@@ -38,20 +38,23 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
 .. code:: bash
 
     $ rst-lint --help
-    usage: rst-lint [-h] [--version] [--format FORMAT] [--encoding ENCODING]
+    usage: rst-lint [-h] [--version] [--format {text,json}] [--encoding ENCODING]
+                    [--level {debug,info,warning,error,severe}]
                     filepath [filepath ...]
 
-    Lint reStructuredText files
+    Lint reStructuredText files. Returns 0 if all files pass linting, 1 for an
+    internal error, and 2 if linting failed.
 
     positional arguments:
-      filepath             File to lint
+      filepath              File to lint
 
     optional arguments:
-      -h, --help           show this help message and exit
-      --version            show program's version number and exit
-      --format FORMAT      Format of the output (e.g. text, json)
-      --encoding ENCODING  Encoding of the input file (e.g. utf-8)
-
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      --format {text,json}  Format of the output (default: "text")
+      --encoding ENCODING   Encoding of the input file (e.g. "utf-8")
+      --level {debug,info,warning,error,severe}
+                            Minimum error level to report (default: "warning")
 
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
