@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.0.0 - Moved to "Silence is golden" philosophy. Clean files now have no output
+
 0.18.0 - Added `--level` CLI option via @peterjc in #37
 
 0.17.2 - Added `zip_safe` flag via @djanderson in #35
