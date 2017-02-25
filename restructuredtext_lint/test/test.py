@@ -118,7 +118,7 @@ class TestRestructuredtextLintCLI(TestCase):
         self.assertIn('too few arguments', output)
 
     def test_rst_lint_correct_file(self):
-        """The `rst-lint` command prints out 'X is clean' if rst file is correct."""
+        """The `rst-lint` command prints nothing if rst file is correct."""
         # python ../cli.py test_files/valid.rst
         raw_output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst))
         output = str(raw_output)
