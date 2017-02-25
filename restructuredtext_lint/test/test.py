@@ -111,18 +111,18 @@ class TestRestructuredtextLintCLI(TestCase):
 
     def test_rst_lint_filepaths_not_given(self):
         """The `rst-lint` command is available and prints error if no filepath was given."""
-        with self.assertRaises(subprocess.CalledProcessError):
+        with self.assertRaises(subprocess.CalledProcessError) as e:
             # python ../cli.py
-            output = subprocess.check_output((sys.executable, rst_lint_path), stderr=subprocess.STDOUT)
-            self.assertIn('too few arguments', output)
+            subprocess.check_output((sys.executable, rst_lint_path), stderr=subprocess.STDOUT)
+        output = str(e.exception.output)
+        self.assertIn('too few arguments', output)
 
     def test_rst_lint_correct_file(self):
         """The `rst-lint` command prints out 'X is clean' if rst file is correct."""
         # python ../cli.py test_files/valid.rst
         raw_output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst))
-        output = str(raw_output).splitlines()
-        self.assertIn('{filepath} is clean'.format(filepath=valid_rst), output[0])
-        self.assertEqual(len(output), 1)
+        output = str(raw_output)
+        self.assertEqual(output, '')
 
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
@@ -157,9 +157,9 @@ class TestRestructuredtextLintCLI(TestCase):
         """Confirm high --level threshold accepts file with warnings only"""
         # This is the expected behaviour we are checking:
         # $ rst-lint --level error second_short_heading.rst ; echo "Return code $?"
-        # INFO File second_short_heading.rst is clean.
         # Return code 0
-        output = subprocess.check_output((sys.executable, rst_lint_path, '--level', 'error', warning_rst),
-                                         universal_newlines=True)
-        self.assertEqual(1, output.count('\n'), output)
-        self.assertEqual(1, output.count('is clean'), output)
+        raw_output = subprocess.check_output((sys.executable, rst_lint_path, '--level', 'error', warning_rst),
+                                             universal_newlines=True)
+        # `check_output` doesn't raise an exception code so it's error code 0
+        output = str(raw_output)
+        self.assertEqual(output, '')
