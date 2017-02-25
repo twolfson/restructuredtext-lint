@@ -115,12 +115,14 @@ class TestRestructuredtextLintCLI(TestCase):
             # python ../cli.py
             subprocess.check_output((sys.executable, rst_lint_path), stderr=subprocess.STDOUT)
         output = str(e.exception.output)
-        self.assertIn('too few arguments', output)
+        # Python 2: "too few arguments"
+        # Python 3: "the following arguments are required: filepath"
+        self.assertIn('arguments', output)
 
     def test_rst_lint_correct_file(self):
         """The `rst-lint` command prints nothing if rst file is correct."""
         # python ../cli.py test_files/valid.rst
-        raw_output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst))
+        raw_output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst), universal_newlines=True)
         output = str(raw_output)
         self.assertEqual(output, '')
 
@@ -128,7 +130,7 @@ class TestRestructuredtextLintCLI(TestCase):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
         with self.assertRaises(subprocess.CalledProcessError) as e:
             # python ../cli.py test_files/valid.rst invalid.rst
-            subprocess.check_output((sys.executable, rst_lint_path, valid_rst, invalid_rst))
+            subprocess.check_output((sys.executable, rst_lint_path, valid_rst, invalid_rst), universal_newlines=True)
         output = str(e.exception.output)
         # 'rst-lint' should exit with error code 2 as linting failed:
         self.assertEqual(e.exception.returncode, 2)
