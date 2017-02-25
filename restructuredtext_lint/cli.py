@@ -42,10 +42,7 @@ def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, le
         unfiltered_file_errors = lint_file(filepath, encoding=encoding)
         file_errors = [err for err in unfiltered_file_errors if err.level >= level]
 
-        if not file_errors:
-            if format == 'text':
-                stream.write('INFO File {filepath} is clean.\n'.format(filepath=filepath))
-        else:
+        if file_errors:
             error_occurred = True
             if format == 'text':
                 for err in file_errors:

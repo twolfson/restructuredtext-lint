@@ -132,8 +132,9 @@ class TestRestructuredtextLintCLI(TestCase):
         output = str(e.exception.output)
         # 'rst-lint' should exit with error code 2 as linting failed:
         self.assertEqual(e.exception.returncode, 2)
-        # There should be a least one valid .rst file:
-        self.assertIn('is clean', output)
+        # There should be no clean output:
+        # DEV: This verifies only 1 line of output which is our invalid line
+        self.assertEqual(output.count('\n'), 1, output)
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
 
@@ -148,8 +149,8 @@ class TestRestructuredtextLintCLI(TestCase):
             subprocess.check_output((sys.executable, rst_lint_path, '--level', 'warning', warning_rst),
                                     universal_newlines=True)
         output = str(e.exception.output)
-        self.assertEqual(2, output.count('\n'), output)
-        self.assertEqual(2, output.count('WARNING'), output)
+        self.assertEqual(output.count('\n'), 2, output)
+        self.assertEqual(output.count('WARNING'), 2, output)
         # The expected 2 warnings should be treated as failing
         self.assertEqual(e.exception.returncode, 2)
 
