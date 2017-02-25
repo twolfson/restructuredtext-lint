@@ -12,6 +12,7 @@ import restructuredtext_lint
 
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 valid_rst = os.path.join(__dir__, 'test_files', 'valid.rst')
+warning_rst = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
 invalid_rst = os.path.join(__dir__, 'test_files', 'invalid.rst')
 rst_lint_path = os.path.join(__dir__, os.pardir, 'cli.py')
 
@@ -129,9 +130,36 @@ class TestRestructuredtextLintCLI(TestCase):
             # python ../cli.py test_files/valid.rst invalid.rst
             subprocess.check_output((sys.executable, rst_lint_path, valid_rst, invalid_rst))
         output = str(e.exception.output)
-        # 'rst-lint' should exit with error code 1:
-        self.assertEqual(e.exception.returncode, 1)
+        # 'rst-lint' should exit with error code 2 as linting failed:
+        self.assertEqual(e.exception.returncode, 2)
         # There should be a least one valid .rst file:
         self.assertIn('is clean', output)
         # There should be a least one invalid rst file:
         self.assertIn('WARNING', output)
+
+    def test_level_fail(self):
+        """Confirm low --level threshold fails file with warnings only"""
+        # This is the expected behaviour we are checking:
+        # $ rst-lint --level warning second_short_heading.rst ; echo "Return code $?"
+        # WARNING second_short_heading.rst:6 Title underline too short.
+        # WARNING second_short_heading.rst:6 Title underline too short.
+        # Return code 2
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            subprocess.check_output((sys.executable, rst_lint_path, '--level', 'warning', warning_rst),
+                                    universal_newlines=True)
+        output = str(e.exception.output)
+        self.assertEqual(2, output.count('\n'), output)
+        self.assertEqual(2, output.count('WARNING'), output)
+        # The expected 2 warnings should be treated as failing
+        self.assertEqual(e.exception.returncode, 2)
+
+    def test_level_high(self):
+        """Confirm high --level threshold accepts file with warnings only"""
+        # This is the expected behaviour we are checking:
+        # $ rst-lint --level error second_short_heading.rst ; echo "Return code $?"
+        # INFO File second_short_heading.rst is clean.
+        # Return code 0
+        output = subprocess.check_output((sys.executable, rst_lint_path, '--level', 'error', warning_rst),
+                                         universal_newlines=True)
+        self.assertEqual(1, output.count('\n'), output)
+        self.assertEqual(1, output.count('is clean'), output)
