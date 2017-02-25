@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+0.18.0 - Added `--level` CLI option via @peterjc in #37
+
 0.17.2 - Added `zip_safe` flag via @djanderson in #35
 
 0.17.1 - Updated documentation with new info on Sphinx from #29
