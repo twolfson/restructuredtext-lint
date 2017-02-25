@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.0.1 - Repaired Python 3 testing errors in Travis CI
+
 1.0.0 - Moved to "Silence is golden" philosophy. Clean files now have no output
 
 0.18.0 - Added `--level` CLI option via @peterjc in #37
