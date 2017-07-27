@@ -33,13 +33,14 @@ DEFAULT_LEVEL_KEY = WARNING_LEVEL_KEY
 
 
 # Define our CLI function
-def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=LEVEL_MAP[DEFAULT_LEVEL_KEY]):
+def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=LEVEL_MAP[DEFAULT_LEVEL_KEY],
+          **kwargs):
     error_dicts = []
     error_occurred = False
 
     for filepath in filepaths:
         # Read and lint the file
-        unfiltered_file_errors = lint_file(filepath, encoding=encoding)
+        unfiltered_file_errors = lint_file(filepath, encoding=encoding, **kwargs)
         file_errors = [err for err in unfiltered_file_errors if err.level >= level]
 
         if file_errors:
@@ -78,6 +79,8 @@ def main():
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. "utf-8")')
     parser.add_argument('--level', default=DEFAULT_LEVEL_KEY, type=str, choices=LEVEL_MAP.keys(),
                         help='Minimum error level to report (default: "{default}")'.format(default=DEFAULT_LEVEL_KEY))
+    parser.add_argument('--rst-prolog', type=str,
+                        help='reStructuredText content to prepend to all files (useful for substitutions)')
     args = parser.parse_args()
 
     # Convert our level from string to number for `_main`

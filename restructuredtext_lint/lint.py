@@ -11,6 +11,7 @@ def lint(content, filepath=None, rst_prolog=None):
 
     :param string content: reStructuredText to be linted
     :param string filepath: Optional path to file, this will be returned as the source
+    :param string rst_prolog: Optional content to prepend to content, line numbers will be offset to ignore this
     :rtype list: List of errors. Each error will contain a line, source (filepath),
         message (error message), and full message (error message + source lines)
     """
@@ -91,8 +92,8 @@ def lint(content, filepath=None, rst_prolog=None):
     return errors
 
 
-def lint_file(filepath, encoding=None):
+def lint_file(filepath, encoding=None, *args, **kwargs):
     """Lint a specific file"""
     with io.open(filepath, encoding=encoding) as f:
         content = f.read()
-    return lint(content, filepath)
+    return lint(content, filepath, *args, **kwargs)
