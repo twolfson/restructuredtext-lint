@@ -55,6 +55,9 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
       --encoding ENCODING   Encoding of the input file (e.g. "utf-8")
       --level {debug,info,warning,error,severe}
                             Minimum error level to report (default: "warning")
+      --rst-prolog RST_PROLOG
+                            reStructuredText content to prepend to all files
+                            (useful for substitutions)
 
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
@@ -83,12 +86,13 @@ Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` and ``lint_file`` function
 
-``restructuredtext_lint.lint(content, filepath=None)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``restructuredtext_lint.lint(content, filepath=None, rst_prolog=None)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lint `reStructuredText`_ and return errors
 
 - content ``String`` - `reStructuredText`_ to be linted
 - filepath ``String`` - Optional path to file, this will be returned as the source
+- rst_prolog ``String`` - Optional content to prepend to content, line numbers will be offset to ignore this
 
 Returns:
 
@@ -115,8 +119,8 @@ Returns:
 
 .. _`docutils`: http://docutils.sourceforge.net/
 
-``restructuredtext_lint.lint_file(filepath, encoding=None)``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``restructuredtext_lint.lint_file(filepath, encoding=None, *args, **kwargs)``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lint a `reStructuredText`_ file and return errors
 
 - filepath ``String`` - Path to file for linting
@@ -124,6 +128,9 @@ Lint a `reStructuredText`_ file and return errors
 
   - When ``None`` is provided, it will use OS default as provided by `locale.getpreferredencoding`_
   - The list of supported encodings can be found at http://docs.python.org/2/library/codecs.html#standard-encodings
+
+- ``*args`` - Additional arguments to be passed to ``lint``
+- ``**kwargs`` - Additional keyword arguments to be passed to ``lint``
 
 .. _`locale.getpreferredencoding`: http://docs.python.org/2/library/locale.html#locale.getpreferredencoding
 
