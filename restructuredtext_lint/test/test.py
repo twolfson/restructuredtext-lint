@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import os
 import subprocess
 import sys
+import textwrap
 from unittest import TestCase
 
 import yaml
@@ -109,22 +110,23 @@ class TestRestructuredtextLint(TestCase):
         """A document using substitutions from an `rst-prolog` has no errors"""
         # https://github.com/twolfson/restructuredtext-lint/issues/39
         # Set up our common content
-        rst_prolog_content = """
+        rst_prolog = textwrap.dedent("""
         .. |World| replace:: Moon
-        """
-        file_content = """
+        """)
+        content = textwrap.dedent("""
         Hello
         =====
         |World|
-        """
+        """)
 
         # Verify we have errors about substitutions without our `--rst-prolog`
-        errors = restructuredtext_lint(content)
+        errors = restructuredtext_lint.lint(content)
         self.assertEqual(len(errors), 1)
-        self.assertEqual('wat', errors[0].message)
+        self.assertIn('Undefined substitution referenced: "World"', errors[0].message)
 
         # Verify we have no errors with our `--rst-prolog`
-        self.assertEqual('TODO: Implement me', False)
+        errors = restructuredtext_lint.lint(content, rst_prolog=rst_prolog)
+        self.assertEqual(len(errors), 0)
 
     def test_rst_prolog_line_offset(self):
         """A document with errors using an `rst-prolog` offsets our error lines"""
