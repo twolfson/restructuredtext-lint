@@ -105,6 +105,20 @@ class TestRestructuredtextLint(TestCase):
         self.assertIn('Anonymous hyperlink mismatch: 1 references but 0 targets.', errors[0].message)
         self.assertIn('Hyperlink target "hello" is not referenced.', errors[1].message)
 
+    def test_rst_prolog_basic(self):
+        """A document using substitutions from an `rst-prolog` has no errors"""
+        # https://github.com/twolfson/restructuredtext-lint/issues/39
+        # Verify we have errors about substitutions without our `--rst-prolog`
+        self.assertEqual('TODO: Implement me', False)
+
+        # Verify we have no errors with our `--rst-prolog`
+        self.assertEqual('TODO: Implement me', False)
+
+    def test_rst_prolog_line_offset(self):
+        """A document with errors using an `rst-prolog` offsets our error lines"""
+        # https://github.com/twolfson/restructuredtext-lint/issues/39
+        self.assertEqual('TODO: Implement me', False)
+
 
 class TestRestructuredtextLintCLI(TestCase):
     """ Tests for 'rst-lint' CLI comand """
