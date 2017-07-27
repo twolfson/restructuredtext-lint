@@ -6,7 +6,7 @@ from docutils.core import Publisher
 from docutils.nodes import Element
 
 
-def lint(content, filepath=None):
+def lint(content, filepath=None, rst_prolog=None):
     """Lint reStructuredText and return errors
 
     :param string content: reStructuredText to be linted
@@ -44,9 +44,18 @@ def lint(content, filepath=None):
     # Collect errors via an observer
     errors = []
 
+    # If we have an RST prolog, then prepend it and calculate its offset
+    rst_prolog_line_offset = 0
+    if rst_prolog:
+        content = rst_prolog + '\n' + content
+        rst_prolog_line_offset = rst_prolog.count('\n') + 1
+
     def error_collector(data):
         # Mutate the data since it was just generated
+        # DEV: We will generate negative line numbers for RST prolog errors
         data.line = data.get('line')
+        if isinstance(data.line, int):
+            data.line -= rst_prolog_line_offset
         data.source = data['source']
         data.level = data['level']
         data.type = data['type']
