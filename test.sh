@@ -4,5 +4,7 @@ set -e
 set -x
 
 # Run our linter and tests
-flake8 --max-line-length=120 restructuredtext_lint
+if test "$SKIP_LINT" != "TRUE"; then
+  flake8 --max-line-length=120 restructuredtext_lint
+fi
 nosetests --nocapture $*
