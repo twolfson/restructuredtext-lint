@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.1.0 - Added support for `--rst-prolog`. Fixes #39
+
 1.0.1 - Repaired Python 3 testing errors in Travis CI
 
 1.0.0 - Moved to "Silence is golden" philosophy. Clean files now have no output
