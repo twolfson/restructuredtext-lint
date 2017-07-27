@@ -131,7 +131,22 @@ class TestRestructuredtextLint(TestCase):
     def test_rst_prolog_line_offset(self):
         """A document with errors using an `rst-prolog` offsets our error lines"""
         # https://github.com/twolfson/restructuredtext-lint/issues/39
-        self.assertEqual('TODO: Implement me', False)
+        # Perform our setup
+        rst_prolog = textwrap.dedent("""
+        .. |World| replace:: Moon
+        """)
+        content = textwrap.dedent("""
+        Hello
+        ==
+        |World|
+        """)
+
+        # Lint our content and assert its errors
+        errors = restructuredtext_lint.lint(content, rst_prolog=rst_prolog)
+        self.assertEqual(len(errors), 1)
+        self.assertIn('Possible title underline, too short for the title', errors[0].message)
+        # DEV: Without adjustments, this would be 6 due to empty lines in multiline strings
+        self.assertEqual(errors[0].line, 3)
 
 
 class TestRestructuredtextLintCLI(TestCase):
