@@ -208,14 +208,12 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 Donating
 --------
-Support this project and `others by twolfson`_ via `gittip`_.
+Support this project and `others by twolfson`_ via `donations`_.
 
-.. image:: https://rawgithub.com/twolfson/gittip-badge/master/dist/gittip.png
-   :target: `gittip`_
-   :alt: Support via Gittip
+http://twolfson.com/support-me
 
-.. _`others by twolfson`:
-.. _gittip: https://www.gittip.com/twolfson/
+.. _`others by twolfson`: http://twolfson.com/projects
+.. _donations: http://twolfson.com/support-me
 
 Unlicense
 ---------
