@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.1.2 - Replaced Gittip with support me page
+
 1.1.1 - Removed PyPy3 from Travis CI to fix failures
 
 1.1.0 - Added support for `--rst-prolog`. Fixes #39
