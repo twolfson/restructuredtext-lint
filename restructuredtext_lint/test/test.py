@@ -44,7 +44,7 @@ class TestRestructuredtextLint(TestCase):
         self.assertEqual(errors, [])
 
     def test_raises_on_invalid_rst(self):
-        """A invalid reStructuredText file when linted raises errors"""
+        """An invalid reStructuredText file when linted raises errors"""
         # Load and lint invalid file
         content = self._load_file(invalid_rst)
         actual_errors = self._lint_file(content, invalid_rst)
@@ -150,7 +150,7 @@ class TestRestructuredtextLint(TestCase):
 
 
 class TestRestructuredtextLintCLI(TestCase):
-    """ Tests for 'rst-lint' CLI comand """
+    """ Tests for 'rst-lint' CLI command """
 
     def test_rst_lint_filepaths_not_given(self):
         """The `rst-lint` command is available and prints error if no filepath was given."""
