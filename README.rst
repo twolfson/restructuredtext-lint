@@ -35,7 +35,7 @@ CLI Utility
 ^^^^^^^^^^^
 For your convenience, we present a CLI utility ``rst-lint`` (also available as ``restructuredtext-lint``).
 
-.. code:: bash
+.. code:: console
 
     $ rst-lint --help
     usage: rst-lint [-h] [--version] [--format {text,json}] [--encoding ENCODING]
