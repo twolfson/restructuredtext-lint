@@ -9,12 +9,12 @@ from unittest import TestCase
 import restructuredtext_lint
 
 
-__dir__ = os.path.dirname(os.path.abspath(__file__))
-valid_rst = os.path.join(__dir__, 'test_files', 'valid.rst')
-warning_rst = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
-dir_rst = os.path.join(__dir__, 'test_files', 'dir')
-invalid_rst = os.path.join(__dir__, 'test_files', 'invalid.rst')
-rst_lint_path = os.path.join(__dir__, os.pardir, 'cli.py')
+_dir = os.path.dirname(os.path.abspath(__file__))
+valid_rst = os.path.join(_dir, 'test_files', 'valid.rst')
+warning_rst = os.path.join(_dir, 'test_files', 'second_short_heading.rst')
+dir_rst = os.path.join(_dir, 'test_files', 'dir')
+invalid_rst = os.path.join(_dir, 'test_files', 'invalid.rst')
+rst_lint_path = os.path.join(_dir, os.pardir, 'cli.py')
 
 """
 # TODO: Implement this as a class (options) with a sugar function that lints a string against a set of options
@@ -58,7 +58,7 @@ class TestRestructuredtextLint(TestCase):
 
     def test_encoding_utf8(self):
         """A document with utf-8 characters is valid."""
-        filepath = os.path.join(__dir__, 'test_files', 'utf8.rst')
+        filepath = os.path.join(_dir, 'test_files', 'utf8.rst')
         errors = restructuredtext_lint.lint_file(filepath, encoding='utf-8')
         self.assertEqual(errors, [])
 
@@ -67,7 +67,7 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/5
         """
-        filepath = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
+        filepath = os.path.join(_dir, 'test_files', 'second_short_heading.rst')
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertEqual(errors[0].line, 6)
         self.assertEqual(errors[0].source, filepath)
@@ -77,7 +77,7 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/6
         """
-        filepath = os.path.join(__dir__, 'test_files', 'invalid_target.rst')
+        filepath = os.path.join(_dir, 'test_files', 'invalid_target.rst')
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('Unknown target name', errors[0].message)
 
@@ -86,7 +86,7 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/7
         """
-        filepath = os.path.join(__dir__, 'test_files', 'invalid_line_mismatch.rst')
+        filepath = os.path.join(_dir, 'test_files', 'invalid_line_mismatch.rst')
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('Title overline & underline mismatch', errors[0].message)
 
@@ -95,7 +95,7 @@ class TestRestructuredtextLint(TestCase):
 
         This is a regression test for https://github.com/twolfson/restructuredtext-lint/issues/12
         """
-        filepath = os.path.join(__dir__, 'test_files', 'invalid_link.rst')
+        filepath = os.path.join(_dir, 'test_files', 'invalid_link.rst')
         errors = restructuredtext_lint.lint_file(filepath)
         self.assertIn('Anonymous hyperlink mismatch: 1 references but 0 targets.', errors[0].message)
         self.assertIn('Hyperlink target "hello" is not referenced.', errors[1].message)
