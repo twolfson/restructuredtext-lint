@@ -37,8 +37,21 @@ def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, le
           **kwargs):
     error_dicts = []
     error_occurred = False
+    paths = []
 
-    for filepath in filepaths:
+    for path in filepaths:
+        # Check if the given path is a file or a directory
+        if (os.path.isfile(path)):
+            paths.append(path)
+        else:
+            for file in os.listdir(path):
+                fname, fext = os.path.splitext(file)
+                if fext == '.rst':
+                    paths.append(os.path.join(path, file))
+                elif fext == '':
+                    filepaths.append(os.path.join(path, file))
+
+    for filepath in paths:
         # Read and lint the file
         unfiltered_file_errors = lint_file(filepath, encoding=encoding, **kwargs)
         file_errors = [err for err in unfiltered_file_errors if err.level >= level]
