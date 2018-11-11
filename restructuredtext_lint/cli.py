@@ -41,15 +41,14 @@ def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, le
 
     for path in filepaths:
         # Check if the given path is a file or a directory
-        if (os.path.isfile(path)):
+        if os.path.isfile(path):
             paths.append(path)
         else:
-            for file in os.listdir(path):
-                fname, fext = os.path.splitext(file)
-                if fext == '.rst':
-                    paths.append(os.path.join(path, file))
-                elif fext == '':
-                    filepaths.append(os.path.join(path, file))
+            # Recurse over subdirectories to search for *.rst files
+            for root, subdir, files in os.walk(path):
+                for file in files:
+                    if file.endswith('.rst'):
+                        paths.append(os.path.join(root, file))
 
     for filepath in paths:
         # Read and lint the file

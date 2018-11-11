@@ -14,7 +14,7 @@ import restructuredtext_lint
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 valid_rst = os.path.join(__dir__, 'test_files', 'valid.rst')
 warning_rst = os.path.join(__dir__, 'test_files', 'second_short_heading.rst')
-f_rst = os.path.join(__dir__, 'test_files', 'folder')
+dir_rst = os.path.join(__dir__, 'test_files', 'dir')
 invalid_rst = os.path.join(__dir__, 'test_files', 'invalid.rst')
 rst_lint_path = os.path.join(__dir__, os.pardir, 'cli.py')
 
@@ -171,10 +171,12 @@ class TestRestructuredtextLintCLI(TestCase):
         self.assertEqual(output, '')
 
     def test_rst_lint_folder(self):
-        """The `rst-lint` command should print errors in the files inside the folder."""
-        output = subprocess.check_output((sys.executable, rst_lint_path, f_rst), universal_newlines=True)
-        output = str(output)
-        self.assertEqual(output, '')
+        """The `rst-lint` command should print errors for files inside folders."""
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            subprocess.check_output((sys.executable, rst_lint_path, dir_rst), universal_newlines=True)
+        output = str(e.exception.output)
+        # Check if error is produced
+        self.assertIn('WARNING', output)
 
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
@@ -192,9 +194,11 @@ class TestRestructuredtextLintCLI(TestCase):
 
     def test_rst_lint_files_and_folders(self):
         """The `rst-lint` command accepts both files and folders and prints respective info."""
-        output = subprocess.check_output((sys.executable, rst_lint_path, valid_rst, f_rst), universal_newlines=True)
-        output = str(output)
-        self.assertEqual(output, '')
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            subprocess.check_output((sys.executable, rst_lint_path, dir_rst), universal_newlines=True)
+        output = str(e.exception.output)
+        # Check if error is produced
+        self.assertIn('WARNING', output)
 
     def test_level_fail(self):
         """Confirm low --level threshold fails file with warnings only"""
