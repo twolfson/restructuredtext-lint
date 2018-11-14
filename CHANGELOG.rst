@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.2.1 - Dropped Python 3.3 from Travis CI to fix testing errors
+
 1.2.0 - Added directory support via @dhruvsomani in #48. Fixes #38
 
 1.1.3 - Updated documentation and typos via @jwilk in #44 and #45
