@@ -40,13 +40,14 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     $ rst-lint --help
     usage: rst-lint [-h] [--version] [--format {text,json}] [--encoding ENCODING]
                     [--level {debug,info,warning,error,severe}]
-                    filepath [filepath ...]
+                    [--rst-prolog RST_PROLOG]
+                    path [path ...]
 
     Lint reStructuredText files. Returns 0 if all files pass linting, 1 for an
     internal error, and 2 if linting failed.
 
     positional arguments:
-      filepath              File to lint
+      path                  File/folder to lint
 
     optional arguments:
       -h, --help            show this help message and exit
