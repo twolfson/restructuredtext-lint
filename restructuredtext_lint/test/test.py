@@ -175,8 +175,8 @@ class TestRestructuredtextLintCLI(TestCase):
         with self.assertRaises(subprocess.CalledProcessError) as e:
             subprocess.check_output((sys.executable, rst_lint_path, dir_rst), universal_newlines=True)
         output = str(e.exception.output)
-        # Check if error is produced
-        self.assertIn('WARNING', output)
+        # Verify exactly 1 error is produced
+        self.assertEqual(output.count('WARNING'), 1)
 
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
@@ -190,14 +190,6 @@ class TestRestructuredtextLintCLI(TestCase):
         # DEV: This verifies only 1 line of output which is our invalid line
         self.assertEqual(output.count('\n'), 1, output)
         # There should be a least one invalid rst file:
-        self.assertIn('WARNING', output)
-
-    def test_rst_lint_files_and_folders(self):
-        """The `rst-lint` command accepts both files and folders and prints respective info."""
-        with self.assertRaises(subprocess.CalledProcessError) as e:
-            subprocess.check_output((sys.executable, rst_lint_path, dir_rst), universal_newlines=True)
-        output = str(e.exception.output)
-        # Check if error is produced
         self.assertIn('WARNING', output)
 
     def test_level_fail(self):
