@@ -33,24 +33,24 @@ DEFAULT_LEVEL_KEY = WARNING_LEVEL_KEY
 
 
 # Define our CLI function
-def _main(filepaths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=LEVEL_MAP[DEFAULT_LEVEL_KEY],
+def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=LEVEL_MAP[DEFAULT_LEVEL_KEY],
           **kwargs):
     error_dicts = []
     error_occurred = False
-    paths = []
+    filepaths = []
 
-    for path in filepaths:
+    for path in paths:
         # Check if the given path is a file or a directory
         if os.path.isfile(path):
-            paths.append(path)
+            filepaths.append(path)
         else:
             # Recurse over subdirectories to search for *.rst files
             for root, subdir, files in os.walk(path):
                 for file in files:
                     if file.endswith('.rst'):
-                        paths.append(os.path.join(root, file))
+                        filepaths.append(os.path.join(root, file))
 
-    for filepath in paths:
+    for filepath in filepaths:
         # Read and lint the file
         unfiltered_file_errors = lint_file(filepath, encoding=encoding, **kwargs)
         file_errors = [err for err in unfiltered_file_errors if err.level >= level]
@@ -85,7 +85,7 @@ def main():
     parser = argparse.ArgumentParser(description='Lint reStructuredText files. Returns 0 if all files pass linting, '
                                      '1 for an internal error, and 2 if linting failed.')
     parser.add_argument('--version', action='version', version=VERSION)
-    parser.add_argument('filepaths', metavar='filepath', nargs='+', type=str, help='File to lint')
+    parser.add_argument('paths', metavar='path', nargs='+', type=str, help='File/folder to lint')
     parser.add_argument('--format', default=DEFAULT_FORMAT, type=str, choices=('text', 'json'),
                         help='Format of the output (default: "{default}")'.format(default=DEFAULT_FORMAT))
     parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. "utf-8")')
