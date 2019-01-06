@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.2.2 - Dropped PyYAML dev dependency to fix GitHub vulnerability warning
+
 1.2.1 - Dropped Python 3.3 from Travis CI to fix testing errors
 
 1.2.0 - Added directory support via @dhruvsomani in #48. Fixes #38
