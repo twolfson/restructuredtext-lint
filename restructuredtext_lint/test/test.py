@@ -6,8 +6,6 @@ import sys
 import textwrap
 from unittest import TestCase
 
-import yaml
-
 import restructuredtext_lint
 
 
@@ -50,18 +48,13 @@ class TestRestructuredtextLint(TestCase):
         content = self._load_file(invalid_rst)
         actual_errors = self._lint_file(content, invalid_rst)
 
-        # Load in expected errors
-        expected_yaml = self._load_file(os.path.join(__dir__, 'test_files', 'invalid.yaml'))
-        expected_errors = yaml.load(expected_yaml)
-
         # Assert errors against expected errors
-        self.assertEqual(len(actual_errors), len(expected_errors))
-        for i, error in enumerate(expected_errors):
-            self.assertEqual(actual_errors[i].line, expected_errors[i]['line'])
-            self.assertEqual(actual_errors[i].level, expected_errors[i]['level'])
-            self.assertEqual(actual_errors[i].type, expected_errors[i]['type'])
-            self.assertEqual(actual_errors[i].source, invalid_rst)
-            self.assertEqual(actual_errors[i].message, expected_errors[i]['message'])
+        self.assertEqual(len(actual_errors), 1)
+        self.assertEqual(actual_errors[0].line, 2)
+        self.assertEqual(actual_errors[0].level, 2)
+        self.assertEqual(actual_errors[0].type, 'WARNING')
+        self.assertEqual(actual_errors[0].source, invalid_rst)
+        self.assertEqual(actual_errors[0].message, 'Title underline too short.')
 
     def test_encoding_utf8(self):
         """A document with utf-8 characters is valid."""
