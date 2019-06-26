@@ -1,0 +1,6 @@
+-   id: rst-lint
+    name: rst-lint
+    description: reStructuredText linter
+    entry: rst-lint
+    language: python
+    types: [rst]
