@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.3.1 - Removed `.pyc` files from distribution. Fixes #56
+
 1.3.0 - Added Python 3.7 support via @Jenselme in #47
 
 1.2.2 - Dropped PyYAML dev dependency to fix GitHub vulnerability warning
