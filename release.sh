@@ -7,7 +7,7 @@ npm install foundry@~4.3.2 foundry-release-git@~2.0.2 foundry-release-pypi@~3.0.
 
 # Remove all `.pyc` files
 shopt -s globstar
-rm **/*.pyc
+rm **/*.pyc || true
 shopt -u globstar
 
 # Run foundry release with an adjusted PATH
