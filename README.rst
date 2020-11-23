@@ -63,6 +63,14 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
 
+Integration in other tools
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+rst-lint is integrated in the following tools
+
+- `Mega-Linter <https://nvuillam.github.io/mega-linter/>`__ : Open-Source code quality tool aggregating 70 linters, `including rst-lint <https://nvuillam.github.io/mega-linter/descriptors/rst_rst_lint/>`__
+- `Sublime text <https://github.com/SublimeLinter/SublimeLinter-rst>`__ : Sublime Text plugin integrating rst-lint
+
 PyPI issues
 ^^^^^^^^^^^
 While a document may lint cleanly locally, there can be issues when submitted it to `PyPI`_. Here are some common problems:
