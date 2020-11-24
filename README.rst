@@ -63,6 +63,12 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
 
+Other tools
+^^^^^^^^^^^
+``restructuredtext-lint`` is also integrated in other tools. A list can be found and updated in our wiki
+
+https://github.com/twolfson/restructuredtext-lint/wiki/Integration-in-other-tools
+
 PyPI issues
 ^^^^^^^^^^^
 While a document may lint cleanly locally, there can be issues when submitted it to `PyPI`_. Here are some common problems:
