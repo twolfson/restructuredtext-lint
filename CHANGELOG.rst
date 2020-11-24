@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.3.2 - Added "Other tools" section to README. Replacement for #57
+
 1.3.1 - Removed `.pyc` files from distribution. Fixes #56
 
 1.3.0 - Added Python 3.7 support via @Jenselme in #47
