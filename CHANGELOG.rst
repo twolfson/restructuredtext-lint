@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.4.0 - Fixed non-zero exit code for missing files/directories. Fixes #58
+
 1.3.2 - Added "Other tools" section to README. Replacement for #57
 
 1.3.1 - Removed `.pyc` files from distribution. Fixes #56
