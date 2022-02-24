@@ -14,6 +14,7 @@ valid_rst = os.path.join(_dir, 'test_files', 'valid.rst')
 warning_rst = os.path.join(_dir, 'test_files', 'second_short_heading.rst')
 dir_rst = os.path.join(_dir, 'test_files', 'dir')
 invalid_rst = os.path.join(_dir, 'test_files', 'invalid.rst')
+missing_rst = os.path.join(_dir, 'test_files', 'missing.rst')
 rst_lint_path = os.path.join(_dir, os.pardir, 'cli.py')
 
 """
@@ -170,6 +171,16 @@ class TestRestructuredtextLintCLI(TestCase):
         output = str(e.exception.output)
         # Verify exactly 1 error is produced
         self.assertEqual(output.count('WARNING'), 1)
+
+    def test_rst_lint_missing_file(self):
+        """
+        The `rst-lint` command should print errors for files inside folders.
+        Fixes regression https://github.com/twolfson/restructuredtext-lint/issues/58
+        """
+        with self.assertRaises(subprocess.CalledProcessError) as e:
+            subprocess.check_output((sys.executable, rst_lint_path, missing_rst), universal_newlines=True)
+        output = str(e.exception.output)
+        self.assertIn('not found as a file nor directory', output)
 
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""
