@@ -43,12 +43,16 @@ def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=
         # Check if the given path is a file or a directory
         if os.path.isfile(path):
             filepaths.append(path)
-        else:
+        elif os.path.isdir(path):
             # Recurse over subdirectories to search for *.rst files
             for root, subdir, files in os.walk(path):
                 for file in files:
                     if file.endswith('.rst'):
                         filepaths.append(os.path.join(root, file))
+        else:
+            stream.write('Path "{path}" not found as a file nor directory\n'.format(path=path))
+            sys.exit(1)
+            return
 
     for filepath in filepaths:
         # Read and lint the file
