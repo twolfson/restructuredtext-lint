@@ -1,9 +1,9 @@
 restructuredtext-lint
 =====================
 
-.. image:: https://travis-ci.org/twolfson/restructuredtext-lint.png?branch=master
-   :target: https://travis-ci.org/twolfson/restructuredtext-lint
-   :alt: Build Status
+.. image:: https://github.com/twolfson/restructuredtext-lint/actions/workflows/main.yml/badge.svg
+   :target: https://github.com/twolfson/restructuredtext-lint/actions/workflows/main.yml
+   :alt: Tests
 
 `reStructuredText`_ `linter`_
 
