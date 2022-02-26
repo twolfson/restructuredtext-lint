@@ -1,8 +1,8 @@
 restructuredtext-lint
 =====================
 
-.. image:: https://travis-ci.org/twolfson/restructuredtext-lint.png?branch=master
-   :target: https://travis-ci.org/twolfson/restructuredtext-lint
+.. image:: https://app.travis-ci.com/twolfson/restructuredtext-lint.svg?branch=master
+   :target: https://app.travis-ci.com/twolfson/restructuredtext-lint
    :alt: Build Status
 
 `reStructuredText`_ `linter`_
