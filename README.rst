@@ -63,6 +63,20 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
     $ rst-lint README.rst
     WARNING README.rst:2 Title underline too short.
 
+
+pre-commit
+^^^^^^^^^^
+
+This repository is a `pre-commit <https://pre-commit.com>`_ hook.
+
+Usage::
+
+  - repo: https://github.com/twolfson/restructuredtext-lint
+    rev: 1.4.1
+    hooks:
+      - id: restructuredtext_lint
+
+
 Other tools
 ^^^^^^^^^^^
 ``restructuredtext-lint`` is also integrated in other tools. A list can be found and updated in our wiki
