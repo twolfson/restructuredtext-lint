@@ -1,5 +1,9 @@
+# For use with pre-commit.
+# See usage instructions at http://pre-commit.com
+
 - id: restructuredtext_lint
   name: restructuredtext lint
+  description: This hook runs restructuredtext-lint for linting rst docs
   entry: rst-lint --encoding utf-8
   types: [rst]
   language: python
