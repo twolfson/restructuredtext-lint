@@ -1,0 +1,5 @@
+- id: restructuredtext_lint
+  name: restructuredtext lint
+  entry: rst-lint --encoding utf-8
+  types: [rst]
+  language: python
