@@ -69,6 +69,21 @@ Other tools
 
 https://github.com/twolfson/restructuredtext-lint/wiki/Integration-in-other-tools
 
+pre-commit
+----------
+
+To use in `pre-commit`_, add to your ``.pre-commit-config.yaml``
+
+.. code:: console
+
+  - repo: https://github.com/twolfson/restructuredtext-lint
+    rev: 1.4.0  # Specify the latest stable version
+    hooks:
+    - id: rst-lint
+      files: \.rst$
+
+.. _`pre-commit`: https://github.com/pre-commit/pre-commit
+
 PyPI issues
 ^^^^^^^^^^^
 While a document may lint cleanly locally, there can be issues when submitted it to `PyPI`_. Here are some common problems:
