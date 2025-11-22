@@ -1,3 +1,5 @@
+TODO: Once merged, remove Travis CI webhook and integration
+
 restructuredtext-lint
 =====================
 
