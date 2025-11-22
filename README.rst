@@ -88,6 +88,17 @@ While a document may lint cleanly locally, there can be issues when submitted it
 
 .. _`#27`: https://github.com/twolfson/restructuredtext-lint/issues/27
 
+Breaking changes in 2.0.0
+-------------------------
+We removed the ``--encoding`` CLI parameter and its correspodning keyword argument.
+
+This was because not using "utf-8" by default was confusing and detracted from the purpose of our tool (`#65`_).
+
+i.e. ``rst-lint's`` purpose is to check reST structural elements, not the content itself.
+
+.. _`#65`: https://github.com/twolfson/restructuredtext-lint/issues/65
+
+
 Documentation
 -------------
 ``restructuredtext-lint`` exposes a ``lint`` and ``lint_file`` function
