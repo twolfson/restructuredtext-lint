@@ -4,9 +4,9 @@ name: restructuredtext-lint
 on:
   # Run test suite when touching default branch or a PR to it
   push:
-    branches: [ $default-branch ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ "master" ]
   # Also allow directly triggering builds in GitHub
   workflow_dispatch:
 
