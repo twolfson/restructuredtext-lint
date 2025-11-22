@@ -38,7 +38,7 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
 .. code:: console
 
     $ rst-lint --help
-    usage: rst-lint [-h] [--version] [--format {text,json}] [--encoding ENCODING]
+    usage: rst-lint [-h] [--version] [--format {text,json}]
                     [--level {debug,info,warning,error,severe}]
                     [--rst-prolog RST_PROLOG]
                     path [path ...]
@@ -53,7 +53,6 @@ For your convenience, we present a CLI utility ``rst-lint`` (also available as `
       -h, --help            show this help message and exit
       --version             show program's version number and exit
       --format {text,json}  Format of the output (default: "text")
-      --encoding ENCODING   Encoding of the input file (e.g. "utf-8")
       --level {debug,info,warning,error,severe}
                             Minimum error level to report (default: "warning")
       --rst-prolog RST_PROLOG
@@ -126,20 +125,13 @@ Returns:
 
 .. _`docutils`: http://docutils.sourceforge.net/
 
-``restructuredtext_lint.lint_file(filepath, encoding=None, *args, **kwargs)``
+``restructuredtext_lint.lint_file(filepath, *args, **kwargs)``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lint a `reStructuredText`_ file and return errors
 
 - filepath ``String`` - Path to file for linting
-- encoding ``String`` - Encoding to read file in as
-
-  - When ``None`` is provided, it will use OS default as provided by `locale.getpreferredencoding`_
-  - The list of supported encodings can be found at http://docs.python.org/2/library/codecs.html#standard-encodings
-
 - ``*args`` - Additional arguments to be passed to ``lint``
 - ``**kwargs`` - Additional keyword arguments to be passed to ``lint``
-
-.. _`locale.getpreferredencoding`: http://docs.python.org/2/library/locale.html#locale.getpreferredencoding
 
 Returns: Same structure as ``restructuredtext_lint.lint``
 
