@@ -1,20 +1,20 @@
 # Based on https://github.com/actions/starter-workflows/blob/d3334c066a3f79ad2d247f51e89833393e15182a/ci/python-package.yml
-name: Python package
+name: restructuredtext-lint
 
 on:
   push:
-    branches: [ $default-branch ]
+    # TODO: Restore me to default only
+    # branches: [ $default-branch ]
+    branches: "*"
   pull_request:
     branches: [ $default-branch ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["2.7", "3.4", "3.5", "3.6", "3.7"]
 
     steps:
     - uses: actions/checkout@v4
@@ -25,14 +25,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with flake8
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+    - name: Install `restructuredtext_lint`
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+        python setup.py develop
+    - name: Run tests
       run: |
-        pytest
+        ./test.sh
