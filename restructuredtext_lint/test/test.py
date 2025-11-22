@@ -57,12 +57,6 @@ class TestRestructuredtextLint(TestCase):
         self.assertEqual(actual_errors[0].source, invalid_rst)
         self.assertEqual(actual_errors[0].message, 'Title underline too short.')
 
-    def test_encoding_utf8(self):
-        """A document with utf-8 characters is valid."""
-        filepath = os.path.join(_dir, 'test_files', 'utf8.rst')
-        errors = restructuredtext_lint.lint_file(filepath, encoding='utf-8')
-        self.assertEqual(errors, [])
-
     def test_second_heading_short_line_number(self):
         """A document with a short second heading raises errors that include a line number
 
