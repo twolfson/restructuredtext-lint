@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+1.4.1 - Migrated CI from Travis CI to GitHub Actions and fixed test suite failures. Fixes #66 and #67
+
 1.4.0 - Fixed non-zero exit code for missing files/directories. Fixes #58
 
 1.3.2 - Added "Other tools" section to README. Replacement for #57
