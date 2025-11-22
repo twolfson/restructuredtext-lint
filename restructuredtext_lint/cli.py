@@ -33,7 +33,7 @@ DEFAULT_LEVEL_KEY = WARNING_LEVEL_KEY
 
 
 # Define our CLI function
-def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=LEVEL_MAP[DEFAULT_LEVEL_KEY],
+def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, level=LEVEL_MAP[DEFAULT_LEVEL_KEY],
           **kwargs):
     error_dicts = []
     error_occurred = False
@@ -56,7 +56,12 @@ def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, encoding=None, level=
 
     for filepath in filepaths:
         # Read and lint the file
-        unfiltered_file_errors = lint_file(filepath, encoding=encoding, **kwargs)
+        try:
+            unfiltered_file_errors = lint_file(filepath, **kwargs)
+        except Exception:
+            # DEV: If we encounter any error from rst-lint itself, capture the file as well, https://github.com/twolfson/restructuredtext-lint/issues/65#issuecomment-3341112089  # noqa:E501
+            print(f'Encountered issue while linting: {filepath}', file=sys.stderr)
+            raise
         file_errors = [err for err in unfiltered_file_errors if err.level >= level]
 
         if file_errors:
@@ -92,7 +97,6 @@ def main():
     parser.add_argument('paths', metavar='path', nargs='+', type=str, help='File/folder to lint')
     parser.add_argument('--format', default=DEFAULT_FORMAT, type=str, choices=('text', 'json'),
                         help='Format of the output (default: "{default}")'.format(default=DEFAULT_FORMAT))
-    parser.add_argument('--encoding', type=str, help='Encoding of the input file (e.g. "utf-8")')
     parser.add_argument('--level', default=DEFAULT_LEVEL_KEY, type=str, choices=LEVEL_MAP.keys(),
                         help='Minimum error level to report (default: "{default}")'.format(default=DEFAULT_LEVEL_KEY))
     parser.add_argument('--rst-prolog', type=str,

@@ -5,6 +5,9 @@ from docutils import utils
 from docutils.core import Publisher
 from docutils.nodes import Element
 
+# Define constants
+UTF_8_ENCODING = 'utf-8'
+
 
 def lint(content, filepath=None, rst_prolog=None):
     """Lint reStructuredText and return errors
@@ -92,8 +95,9 @@ def lint(content, filepath=None, rst_prolog=None):
     return errors
 
 
-def lint_file(filepath, encoding=None, *args, **kwargs):
+def lint_file(filepath, *args, **kwargs):
     """Lint a specific file"""
-    with io.open(filepath, encoding=encoding) as f:
+    # DEV: Always use "utf-8" as we're linting for reST, not content, and utf-8 should work universally, https://github.com/twolfson/restructuredtext-lint/issues/65  # noqa:E501
+    with io.open(filepath, encoding=UTF_8_ENCODING) as f:
         content = f.read()
     return lint(content, filepath, *args, **kwargs)
