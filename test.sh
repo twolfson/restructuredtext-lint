@@ -7,4 +7,4 @@ set -x
 if test "$SKIP_LINT" != "TRUE"; then
   flake8 --max-line-length=120 restructuredtext_lint
 fi
-nosetests --nocapture $*
+nose3-py3 --nocapture $*
