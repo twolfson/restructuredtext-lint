@@ -11,6 +11,8 @@ setup(
     name='restructuredtext_lint',
     version=VERSION,
     description='reStructuredText linter',
+    # DEV: Guidance on `long_description_content_type` via https://stackoverflow.com/a/63433001
+    long_description_content_type="text/x-rst",
     long_description=open('README.rst').read(),
     keywords=[
         'restructuredtext',
