@@ -1,0 +1,36 @@
+# Based on https://github.com/actions/starter-workflows/blob/d3334c066a3f79ad2d247f51e89833393e15182a/ci/python-package.yml
+name: restructuredtext-lint
+
+on:
+  # Run test suite when touching default branch or a PR to it
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  # Also allow directly triggering builds in GitHub
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+    - name: Install `restructuredtext_lint`
+      run: |
+        python setup.py develop
+    - name: Run tests
+      run: |
+        ./test.sh
