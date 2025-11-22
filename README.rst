@@ -1,4 +1,6 @@
 TODO: Once merged, remove Travis CI webhook and integration
+TODO: Update CI badge
+TODO: Address all TODOs
 
 restructuredtext-lint
 =====================
