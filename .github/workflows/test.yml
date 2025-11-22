@@ -3,9 +3,7 @@ name: restructuredtext-lint
 
 on:
   push:
-    # TODO: Restore me to default only
-    # branches: [ $default-branch ]
-    branches: "*"
+    branches: [ $default-branch ]
   pull_request:
     branches: [ $default-branch ]
 
