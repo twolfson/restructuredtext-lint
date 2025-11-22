@@ -215,7 +215,22 @@ Here is an example of all invalid properties
 
 Contributing
 ------------
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Test via ``nosetests``.
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality.
+
+Testing
+-------
+Testing can be performed locally via:
+
+.. code:: bash
+
+    # Configure local `rst-lint` to use run from this package
+    python setup.py develop
+
+    # Install development dependencies
+    pip install -r requirements-dev.txt
+
+    # Run our test suite
+    ./test.sh
 
 Donating
 --------
