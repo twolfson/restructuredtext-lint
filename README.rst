@@ -5,8 +5,8 @@ TODO: Address all TODOs
 restructuredtext-lint
 =====================
 
-.. image:: https://app.travis-ci.com/twolfson/restructuredtext-lint.svg?branch=master
-   :target: https://app.travis-ci.com/twolfson/restructuredtext-lint
+.. image:: https://github.com/twolfson/restructuredtext-lint/actions/workflows/test.yml/badge.svg
+   :target: https://github.com/twolfson/restructuredtext-lint/actions/workflows/test.yml
    :alt: Build Status
 
 `reStructuredText`_ `linter`_
