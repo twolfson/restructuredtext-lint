@@ -7,7 +7,7 @@
     "foundry-release-git",
     "foundry-release-pypi",
     {
-      "_comment": "Temporary workaround to build/upload wheel until https://github.com/twolfson/foundry-release-pypi/issues/3 resolved",
+      "_comment": "Workaround to build/upload wheel until https://github.com/twolfson/foundry-release-pypi/issues/3 resolved",
       "type": "customCommand",
       "updateFiles": "python -m build"
     },
