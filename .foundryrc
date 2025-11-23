@@ -5,6 +5,15 @@
       "updateFiles": "echo \"$FOUNDRY_VERSION\" > restructuredtext_lint/VERSION"
     },
     "foundry-release-git",
-    "foundry-release-pypi"
+    "foundry-release-pypi",
+    {
+      "_comment": "Workaround to build/upload wheel until https://github.com/twolfson/foundry-release-pypi/issues/3 resolved",
+      "type": "customCommand",
+      "updateFiles": "python -m build"
+    },
+    {
+      "type": "customCommand",
+      "updateFiles": "twine upload dist/*-${FOUNDRY_VERSION}-*.whl"
+    },
   ]
 }
