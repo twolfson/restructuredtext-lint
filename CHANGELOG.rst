@@ -1,5 +1,9 @@
 restructuredtext-lint changelog
 ===============================
+2.0.1 - Added `wheel` as part of release flow. Fixes #70
+
+2.0.0 - Removed --encoding option. Fixes #65
+
 1.4.1 - Migrated CI from Travis CI to GitHub Actions and fixed test suite failures. Fixes #66 and #67
 
 1.4.0 - Fixed non-zero exit code for missing files/directories. Fixes #58
