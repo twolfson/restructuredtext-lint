@@ -9,11 +9,11 @@
     {
       "_comment": "Workaround to build/upload wheel until https://github.com/twolfson/foundry-release-pypi/issues/3 resolved",
       "type": "customCommand",
-      "updateFiles": "python -m build"
+      "publish": "python -m build"
     },
     {
       "type": "customCommand",
-      "updateFiles": "twine upload dist/*-${FOUNDRY_VERSION}-*.whl"
+      "publish": "twine upload dist/*-${FOUNDRY_VERSION}-*.whl"
     }
   ]
 }
