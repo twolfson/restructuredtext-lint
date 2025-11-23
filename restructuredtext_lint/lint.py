@@ -21,8 +21,7 @@ def lint(content, filepath=None, rst_prolog=None):
     # Generate a new parser (copying `rst2html.py` flow)
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/tools/rst2html.py
     # http://repo.or.cz/w/docutils.git/blob/422cede485668203abc01c76ca317578ff634b30:/docutils/docutils/core.py#l348
-    pub = Publisher(None, None, None, settings=None)
-    pub.set_components('standalone', 'restructuredtext', 'pseudoxml')
+    pub = Publisher('standalone', 'restructuredtext', 'pseudoxml', settings=None)
 
     # Configure publisher
     # DEV: We cannot use `process_command_line` since it processes `sys.argv` which is for `rst-lint`, not `docutils`
