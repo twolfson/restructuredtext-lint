@@ -1,5 +1,7 @@
 restructuredtext-lint changelog
 ===============================
+2.0.2 - Fixed timing of `wheel` compilation and publish
+
 2.0.1 - Added `wheel` as part of release flow. Fixes #70
 
 2.0.0 - Removed --encoding option. Fixes #65
