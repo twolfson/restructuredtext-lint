@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import os
 import subprocess
 import sys
+import tempfile
 import textwrap
 from unittest import TestCase
 
@@ -181,6 +182,22 @@ class TestRestructuredtextLintCLI(TestCase):
             subprocess.check_output((sys.executable, rst_lint_path, missing_rst), universal_newlines=True)
         output = str(e.exception.output)
         self.assertIn('not found as a file nor directory', output)
+
+    def test_rst_lint_non_utf8_file(self):
+        """The `rst-lint` command reports non-UTF-8 files cleanly instead of a traceback."""
+        with tempfile.NamedTemporaryFile(suffix='.rst', delete=False) as f:
+            f.write(b'Title\n=====\n\xff\xfe bad bytes')
+            bad_rst = f.name
+        try:
+            with self.assertRaises(subprocess.CalledProcessError) as e:
+                subprocess.check_output((sys.executable, rst_lint_path, bad_rst),
+                                        universal_newlines=True, stderr=subprocess.STDOUT)
+            output = str(e.exception.output)
+            self.assertEqual(e.exception.returncode, 1)
+            self.assertIn('not encoded in valid UTF-8', output)
+            self.assertNotIn('Traceback', output)
+        finally:
+            os.remove(bad_rst)
 
     def test_rst_lint_many_files(self):
         """The `rst-lint` command accepts many rst file paths and prints respective information for each of them."""

@@ -58,6 +58,10 @@ def _main(paths, format=DEFAULT_FORMAT, stream=sys.stdout, level=LEVEL_MAP[DEFAU
         # Read and lint the file
         try:
             unfiltered_file_errors = lint_file(filepath, **kwargs)
+        except UnicodeDecodeError:
+            stream.write('File "{filepath}" is not encoded in valid UTF-8.\n'.format(filepath=filepath))
+            sys.exit(1)
+            return
         except Exception:
             # DEV: If we encounter any error from rst-lint itself, capture the file as well, https://github.com/twolfson/restructuredtext-lint/issues/65#issuecomment-3341112089  # noqa:E501
             print(f'Encountered issue while linting: {filepath}', file=sys.stderr)
